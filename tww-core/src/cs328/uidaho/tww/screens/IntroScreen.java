@@ -18,8 +18,9 @@ public class IntroScreen extends BaseScreen {
 		NPC npc1 = new NPC(0f, 0f, this.mainStage);
 		npc1.addBlurb("What's up?");
 		
-		this.mainStage.getCamera().viewportHeight = 150f;
-		this.mainStage.getCamera().viewportWidth  = 200f;
+		//Zoom in by 4x
+		this.mainStage.getCamera().viewportHeight /= 4f;
+		this.mainStage.getCamera().viewportWidth  /= 4f;
 	}
 
 	@Override

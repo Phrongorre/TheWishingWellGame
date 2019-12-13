@@ -278,15 +278,19 @@ public class BaseActor extends Group {
 	/*** Collisions methods ***/
 	
 	public void setBoundaryRectangle() {
-		float w = this.getWidth();
-		float h = this.getHeight();
+		this.setBoundaryRectangle(this.getWidth(), this.getHeight());
+	}
+	
+	public void setBoundaryRectangle(float w, float h) {
 		float[] vertices = {0f, 0f, w, 0f, w, h, 0f, h};
 		this.boundaryPolygon = new Polygon(vertices);
 	}
 	
 	public void setBoundaryPolygon(int numSides) {
-		float w = this.getWidth();
-		float h = this.getHeight();
+		this.setBoundaryPolygon(this.getWidth(), this.getHeight(), numSides);
+	}
+	
+	public void setBoundaryPolygon(float w, float h, int numSides) {
 		float[] vertices = new float[2*numSides];
 		
 		for (int i=0; i < numSides; i++) {
