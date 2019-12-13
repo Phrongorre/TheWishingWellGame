@@ -16,6 +16,9 @@ public class IntroScreen extends BaseScreen {
 		this.player.centerAtPosition(400f, 300f);
 		
 		NPC npc1 = new NPC(0f, 0f, this.mainStage);
+		
+		this.mainStage.getCamera().viewportHeight = 150f;
+		this.mainStage.getCamera().viewportWidth  = 200f;
 	}
 
 	@Override

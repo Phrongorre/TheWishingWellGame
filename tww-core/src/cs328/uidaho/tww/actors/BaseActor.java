@@ -130,7 +130,7 @@ public class BaseActor extends Group {
 		for (int n=0; n < fileCount; n++) {
 			String fileName = fileNames[n];
 			Texture texture = new Texture(Gdx.files.internal(fileName));
-			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+			texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 			textureArray.add(new TextureRegion(texture));
 		}
 		
@@ -152,7 +152,7 @@ public class BaseActor extends Group {
 	
 	public Animation<TextureRegion> loadAnimationFromSheet(String fileName, int rows, int cols, float frameDuration, boolean loop) {
 		Texture texture = new Texture(Gdx.files.internal(fileName));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		int frameWidth = texture.getWidth() / cols;
 		int frameHeight = texture.getHeight() / rows;
 		

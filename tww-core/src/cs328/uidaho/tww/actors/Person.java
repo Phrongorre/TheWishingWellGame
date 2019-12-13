@@ -7,7 +7,7 @@ public class Person extends BaseActor {
 	public Person(float x, float y, Stage s) {
 		super(x, y, s);
 		
-		this.loadTexture("Person.png");
+		this.loadTexture("people.png");
 	}
 	
 }
