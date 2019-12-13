@@ -34,15 +34,15 @@ public abstract class BaseGame extends Game {
 		//HIERO-GENERATED METHOD
 		//this.labelStyle.font = new BitmapFont(Gdx.files.internal("cooper.fnt"));
 		//FREETYPEFONTGENERATOR METHOD
-		FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("gui/OpenSans.ttf"));
+		FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("gui/fonts/the-wishing-well/the-wishing-well.ttf"));
 		FreeTypeFontParameter fontParameters = new FreeTypeFontParameter();
 		fontParameters.size = 32;
-		fontParameters.color = Color.WHITE;
-		fontParameters.borderWidth = 2;
-		fontParameters.borderColor = Color.BLACK;
+		fontParameters.color = Color.BLACK;
+		fontParameters.borderWidth = 1;
+		fontParameters.borderColor = Color.WHITE;
 		fontParameters.borderStraight = true;
-		fontParameters.minFilter = TextureFilter.Linear;
-		fontParameters.magFilter = TextureFilter.Linear;
+		fontParameters.minFilter = TextureFilter.Nearest;
+		fontParameters.magFilter = TextureFilter.Nearest;
 		BitmapFont customFont = fontGenerator.generateFont(fontParameters);
 		BaseGame.labelStyle.font = customFont;
 		

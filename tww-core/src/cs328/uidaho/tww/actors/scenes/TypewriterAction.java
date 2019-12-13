@@ -1,6 +1,6 @@
 package cs328.uidaho.tww.actors.scenes;
 
-import cs328.uidaho.tww.actors.DialogueBox;
+import cs328.uidaho.tww.gui.DialogueBox;
 
 public class TypewriterAction extends SetTextAction
 {

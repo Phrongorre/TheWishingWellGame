@@ -2,7 +2,7 @@ package cs328.uidaho.tww.actors.scenes;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 
-import cs328.uidaho.tww.actors.DialogueBox;
+import cs328.uidaho.tww.gui.DialogueBox;
 
 public class SetTextAction extends Action
 {

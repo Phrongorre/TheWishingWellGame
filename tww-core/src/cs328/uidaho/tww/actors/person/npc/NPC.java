@@ -19,4 +19,8 @@ public class NPC extends Person {
 		return this.discussion.addBlurb(new Blurb(content));
 	}
 	
+	public String getNextBlurb() {
+		return this.discussion.getBlurb().content();
+	}
+	
 }

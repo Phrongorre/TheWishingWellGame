@@ -3,6 +3,7 @@ package cs328.uidaho.tww.screens;
 import cs328.uidaho.tww.actors.BaseActor;
 import cs328.uidaho.tww.actors.person.Player;
 import cs328.uidaho.tww.actors.person.npc.NPC;
+import cs328.uidaho.tww.gui.DialogueBox;
 
 public class IntroScreen extends BaseScreen {
 
@@ -18,9 +19,13 @@ public class IntroScreen extends BaseScreen {
 		NPC npc1 = new NPC(0f, 0f, this.mainStage);
 		npc1.addBlurb("What's up?");
 		
+		DialogueBox db = new DialogueBox(0f, 0f, this.mainStage);
+		db.setText(npc1.getNextBlurb());
+		this.uiTable.add(db);
+		
 		//Zoom in by 4x
-		this.mainStage.getCamera().viewportHeight /= 4f;
-		this.mainStage.getCamera().viewportWidth  /= 4f;
+//		this.mainStage.getCamera().viewportHeight /= 4f;
+//		this.mainStage.getCamera().viewportWidth  /= 4f;
 	}
 
 	@Override

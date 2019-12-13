@@ -9,7 +9,7 @@ public class Player extends Person {
 	public Player(float x, float y, Stage s) {
 		super(x, y, s);
 		
-		this.setMaxSpeed(200f);
+		this.setMaxSpeed(80f);
 		this.setAcceleration(4000f);
 		this.setDeceleration(4000f);
 	}

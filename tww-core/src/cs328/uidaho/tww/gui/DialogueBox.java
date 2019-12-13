@@ -1,4 +1,4 @@
-package cs328.uidaho.tww.actors;
+package cs328.uidaho.tww.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 
 import cs328.uidaho.tww.BaseGame;
+import cs328.uidaho.tww.actors.BaseActor;
 
 public class DialogueBox extends BaseActor {
 
