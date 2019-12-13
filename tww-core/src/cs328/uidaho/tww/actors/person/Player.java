@@ -1,4 +1,4 @@
-package cs328.uidaho.tww.actors;
+package cs328.uidaho.tww.actors.person;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
