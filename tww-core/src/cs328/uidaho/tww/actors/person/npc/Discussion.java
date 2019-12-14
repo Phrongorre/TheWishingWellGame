@@ -17,15 +17,15 @@ public class Discussion {
 	}
 	
 	public int addBlurb(Blurb blurb) {
-		this.blurbs.add(blurb);
 		if (!this.hasBlurbs()) this.bIndex = 0;
+		this.blurbs.add(blurb);
 		return this.blurbs.size-1;
 	}
 	
 	public Blurb getBlurb(int bIndex) {
 		Blurb blurb = null;
 		if (this.hasBlurbs()) {
-			this.bIndex = (++bIndex)%this.blurbs.size;
+			this.bIndex = (bIndex+1)%this.blurbs.size;
 			blurb = this.blurbs.get(bIndex);
 		}
 		return blurb;

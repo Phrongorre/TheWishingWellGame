@@ -43,7 +43,8 @@ public class BaseActor extends Group {
 	
 	/*** Collisions fields ***/
 	
-	private Polygon boundaryPolygon;
+	protected Polygon boundaryPolygon;
+	protected Array<TextureRegion> collisionWireframes;
 	
 	/*** Constructors ***/
 	
@@ -64,6 +65,14 @@ public class BaseActor extends Group {
 		this.acceleration = 0f;
 		this.maxSpeed = 1000f;
 		this.deceleration = 0f;
+		//Collision field initialization
+		this.collisionWireframes = new Array<TextureRegion>();
+		Texture texture = new Texture(Gdx.files.internal("gui/collision_wireframe_rect.png"));
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		this.collisionWireframes.add(new TextureRegion(texture));
+		texture = new Texture(Gdx.files.internal("gui/collision_wireframe_round.png"));
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		this.collisionWireframes.add(new TextureRegion(texture));
 	}
 	
 	public BaseActor(Stage s) { this(0f, 0f, s); }
@@ -99,7 +108,7 @@ public class BaseActor extends Group {
 				this.getRotation()
 			);
 		}
-		
+			
 		super.draw(batch, parentAlpha);
 	}
 	
@@ -305,7 +314,7 @@ public class BaseActor extends Group {
 	}
 	
 	public Polygon getBoundaryPolygon() {
-		this.boundaryPolygon.setPosition(this.getX(),  this.getY());
+		this.boundaryPolygon.setPosition(this.getX(), this.getY());
 		this.boundaryPolygon.setOrigin(this.getOriginX(), this.getOriginY());
 		this.boundaryPolygon.setRotation(this.getRotation());
 		this.boundaryPolygon.setScale(this.getScaleX(), this.getScaleY());
