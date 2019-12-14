@@ -45,6 +45,7 @@ public class BaseActor extends Group {
 	
 	protected Polygon boundaryPolygon;
 	protected Array<TextureRegion> collisionWireframes;
+	protected boolean wireframesVisible;
 	
 	/*** Constructors ***/
 	
@@ -73,6 +74,8 @@ public class BaseActor extends Group {
 		texture = new Texture(Gdx.files.internal("gui/collision_wireframe_round.png"));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		this.collisionWireframes.add(new TextureRegion(texture));
+		
+		this.wireframesVisible = false;
 	}
 	
 	public BaseActor(Stage s) { this(0f, 0f, s); }
@@ -366,6 +369,10 @@ public class BaseActor extends Group {
 		
 		this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
 		return mtv.normal;
+	}
+	
+	public void setWireframesVisible(boolean visible) {
+		this.wireframesVisible = visible;
 	}
 	
 	/*** World boundary methods ***/
