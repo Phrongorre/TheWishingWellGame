@@ -2,13 +2,19 @@ package cs328.uidaho.tww.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.actors.BaseActor;
 import cs328.uidaho.tww.actors.Building;
 import cs328.uidaho.tww.actors.Car;
 import cs328.uidaho.tww.actors.Collidable;
+import cs328.uidaho.tww.actors.person.npc.Blurb;
 import cs328.uidaho.tww.actors.person.npc.NPC;
+import cs328.uidaho.tww.actors.person.npc.Prompt;
 import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.gui.DialogueBox;
 
@@ -17,12 +23,13 @@ public class IntroScreen extends BaseScreen {
 	Player player;
 	DialogueBox dialogueBox;
 	boolean showWireframes = false;
+	boolean interacting;
 	
 	@Override
 	public void initialize() {
-		//Zoom in by 4x
-		this.mainStage.getCamera().viewportHeight /= 3f;
-		this.mainStage.getCamera().viewportWidth  /= 3f;
+		//Zoom in by 3x
+		//this.mainStage.getCamera().viewportWidth  /= 3f;
+		//this.mainStage.getCamera().viewportHeight /= 3f;
 		
 		dialogueBox = new DialogueBox(0f, 0f, this.uiStage);
 		dialogueBox.setVisible(false);
@@ -48,52 +55,114 @@ public class IntroScreen extends BaseScreen {
 		tree.setCollisionSize(tree.getWidth()/2f, tree.getWidth()/4f);
 		tree.setCollisionLocation(0f, 8f);
 		
-		player = new Player(0f, 0f, this.mainStage, this.uiTable);
+		player = new Player(0f, 0f, this.mainStage);
 		player.centerAtPosition(100f, 75f);
 		BaseActor.setWorldBounds(
 			ground.getWidth(),
 			ground.getHeight() + player.getHeight() - player.getCollisionHeight()/2f
 		);
+		interacting = false;
 		
-		NPC npc = new NPC(40f, 75f, this.mainStage);
-		npc.addBlurb("What's up?");
+		NPC npc;
+		Prompt prompt;
+		
+		npc = new NPC(40f, 75f, this.mainStage);
+		prompt = new Blurb("What's up?");
+		npc.addPrompt(prompt);
 		
 		npc = new NPC(30f, 65f, this.mainStage);
-		npc.addBlurb("How are you today?");
-		npc.addBlurb("Wha?");
+		prompt = new Blurb("Wha?");
+		prompt = new Blurb("How are you today?", prompt);
+		npc.addPrompt(prompt);
 		
 		new Car(172f, 34f, this.mainStage);
 	}
 
+	final PromptHolder promptHolder = new PromptHolder();
+	
 	@Override
 	public void update(float dt) {
-		for (BaseActor collidableActor : BaseActor.getList(this.mainStage, Collidable.class.getName())) {
-			Collidable collidable = (Collidable)collidableActor;
-			
-			if (collidable != player) {
-				player.preventOverlap(collidable);
-				player.adjustZIndex(collidable);				
+		if (player.isInteracting()) {
+			if (promptHolder.hasChanged()) {
+				Prompt prompt = promptHolder.prompt();
+				if (prompt == null) {
+					dialogueBox.setVisible(false);
+					player.setInteracting(false);
+					return;
+				}
+				dialogueBox.clear();
+				dialogueBox.setText(prompt.prompt());
+				for (int r=0; r < prompt.responseCount(); r++) {
+					TextButton responseButton = new TextButton(prompt.response(r), BaseGame.textButtonStyle);
+					final Prompt nextPrompt = prompt.followResponse(r);
+					responseButton.addListener(
+						(Event e) ->
+						{
+							if (!(e instanceof InputEvent) ||
+								!((InputEvent)e).getType().equals(Type.touchDown))
+							{ return false; }
+							
+							promptHolder.setPrompt(nextPrompt);
+							
+							return false;
+						}
+					);
+					responseButton.setSize(60f, 40f);
+					dialogueBox.addTextButton(responseButton);
+				}
+			}
+		}
+		else {
+			for (BaseActor collidableActor : BaseActor.getList(this.mainStage, Collidable.class.getName())) {
+				Collidable collidable = (Collidable)collidableActor;
+				
+				if (collidable != player) {
+					player.preventOverlap(collidable);
+					player.adjustZIndex(collidable);				
+				}
+				
+				if (showWireframes) collidable.setWireframesVisible(true);
 			}
 			
-			if (showWireframes) collidable.setWireframesVisible(true);
+			for (BaseActor npcActor : BaseActor.getList(this.mainStage, NPC.class.getName())) {
+				NPC npc = (NPC)npcActor;
+				
+				if (player.interactsWith(npc) && Gdx.input.isKeyJustPressed(Keys.E)) {
+					dialogueBox.setVisible(true);
+					player.setInteracting(true);
+					promptHolder.setPrompt(npc.getNextPrompt());
+					return;
+				}
+			}
+		}
+	}
+	
+	private class PromptHolder {
+		
+		private Prompt prompt;
+		private boolean changed;
+		
+		public PromptHolder() {
+			this.prompt = null;
+			this.changed = false;
 		}
 		
-		for (BaseActor npcActor : BaseActor.getList(this.mainStage, NPC.class.getName())) {
-			NPC npc = (NPC)npcActor;
-			
-			if (player.interactsWith(npc) && Gdx.input.isKeyJustPressed(Keys.E)) {
-				dialogueBox.setText(npc.getNextBlurb());
-				dialogueBox.clearActions();
-				dialogueBox.setVisible(true);
-				dialogueBox.addAction(
-					Actions.delay(3f, Actions.run(
-						() -> {
-							dialogueBox.setVisible(false);
-						}
-					)
-				));
-			 }
+		public void setPrompt(Prompt prompt) {
+			if (this.prompt != prompt) {
+				this.prompt = prompt;
+				this.changed = true;
+			}
 		}
+		
+		public Prompt prompt() {
+			this.changed = false;
+			return this.prompt;
+		}
+		
+		public boolean hasChanged() {
+			return this.changed;
+		}
+		
 	}
 
 }

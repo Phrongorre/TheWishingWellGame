@@ -1,19 +1,30 @@
 package cs328.uidaho.tww.actors.person.npc;
 
-public class Blurb {
+public class Blurb extends Prompt {
 	
-	private String content;
-	
-	public Blurb(String text) {
-		this.content = text;
+	public Blurb(String prompt, Prompt follow) {
+		super(prompt);
+		super.addResponse("Next", follow);
 	}
 	
-	public void setContent(String text) {
-		this.content = text;
+	public Blurb(String prompt) {
+		super(prompt);
+		super.addResponse("Next", null);
 	}
 	
-	public String content() {
-		return this.content;
+	public void setFollowPrompt(Prompt follow) {
+		this.setFollowPrompt(0, follow);
+	}
+	
+	@Override
+	public void setFollowPrompt(int index, Prompt follow) {
+		if (index == 0) this.setFollowPrompt(follow);
+		return;
+	}
+	
+	@Override
+	public int addResponse(String response, Prompt follow) {
+		return -1;
 	}
 	
 }

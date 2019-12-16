@@ -2,36 +2,43 @@ package cs328.uidaho.tww.actors.person.npc;
 
 import com.badlogic.gdx.utils.Array;
 
+import cs328.uidaho.tww.actors.person.npc.Prompt.Response;
+
 public class Discussion {
 	
-	private Array<Blurb> blurbs;
-	private int bIndex;
+	private Array<Prompt> prompts;
+	private int pIndex;
 	
 	public Discussion() {
-		this.blurbs = new Array<Blurb>();
-		this.bIndex = -1;
+		this.prompts = new Array<Prompt>();
+		this.pIndex = -1;
 	}
 	
-	public boolean hasBlurbs() {
-		return this.blurbs.size > 0;
+	public boolean hasPrompts() {
+		return this.prompts.size > 0;
 	}
 	
-	public int addBlurb(Blurb blurb) {
-		if (!this.hasBlurbs()) this.bIndex = 0;
-		this.blurbs.add(blurb);
-		return this.blurbs.size-1;
-	}
-	
-	public Blurb getBlurb(int bIndex) {
-		Blurb blurb = null;
-		if (this.hasBlurbs()) {
-			this.bIndex = (bIndex+1)%this.blurbs.size;
-			blurb = this.blurbs.get(bIndex);
+	public int addPrompt(Prompt prompt) {
+		if (prompt == null) { return -1; }
+		if (!this.hasPrompts()) this.pIndex = 0;
+		this.prompts.add(prompt);
+		int index = this.prompts.size-1;
+		for (Prompt followPrompt : prompt.followPrompts()) {
+			this.addPrompt(followPrompt);
 		}
-		return blurb;
+		return index;
 	}
 	
-	public Blurb getBlurb() {
-		return this.getBlurb(this.bIndex);
+	public Prompt getPrompt(int pIndex) {
+		Prompt prompt = null;
+		if (this.hasPrompts()) {
+			this.pIndex = (pIndex+1)%this.prompts.size;
+			prompt = this.prompts.get(pIndex);
+		}
+		return prompt;
+	}
+	
+	public Prompt getPrompt() {
+		return this.getPrompt(this.pIndex);
 	}
 }

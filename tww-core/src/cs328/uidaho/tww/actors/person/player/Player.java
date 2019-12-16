@@ -16,8 +16,9 @@ public class Player extends Person {
 	
 	private Polygon interactionPolygon;
 	private Inventory inventory;
+	private boolean interacting;
 	
-	public Player(float x, float y, Stage s, Table uiTable) {
+	public Player(float x, float y, Stage s) {
 		super(x, y, s);
 		
 		this.setMaxSpeed(80f);
@@ -28,28 +29,31 @@ public class Player extends Person {
 		
 		this.setInteractionPolygon(8);
 		
-		this.inventory = new Inventory(uiTable);
+		this.inventory = new Inventory();
+		this.interacting = false;
 	}
 	
 	@Override
 	public void act(float dt) {
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			this.accelerateAtAngle(180f);
+		if (!this.interacting) {
+			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+				this.accelerateAtAngle(180f);
+			}
+			if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				this.accelerateAtAngle(0f);
+			}
+			if (Gdx.input.isKeyPressed(Keys.UP)) {
+				this.accelerateAtAngle(90f);
+			}
+			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+				this.accelerateAtAngle(270f);
+			}
+			
+			this.applyPhysics(dt);
+			this.boundToWorld();
+			
+			this.alignCamera();
 		}
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			this.accelerateAtAngle(0f);
-		}
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
-			this.accelerateAtAngle(90f);
-		}
-		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-			this.accelerateAtAngle(270f);
-		}
-		
-		this.applyPhysics(dt);
-		this.boundToWorld();
-		
-		this.alignCamera();
 	}
 	
 	@Override
@@ -71,6 +75,14 @@ public class Player extends Person {
 				ipoly.getRotation()
 			);
 		}
+	}
+	
+	public void setInteracting(boolean interacting) {
+		this.interacting = interacting;
+	}
+	
+	public boolean isInteracting() {
+		return this.interacting;
 	}
 	
 	public void setInteractionRectangle() {

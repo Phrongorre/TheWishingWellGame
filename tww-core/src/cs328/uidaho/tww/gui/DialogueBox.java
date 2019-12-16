@@ -3,6 +3,8 @@ package cs328.uidaho.tww.gui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 
 import cs328.uidaho.tww.BaseGame;
@@ -55,6 +57,10 @@ public class DialogueBox extends BaseActor {
 	
 	public void alignCenter() {
 		this.dialogueLabel.setAlignment(Align.center);
+	}
+	
+	public void addTextButton(TextButton textButton) {
+		
 	}
 	
 }

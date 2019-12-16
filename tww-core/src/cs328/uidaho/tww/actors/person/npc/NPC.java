@@ -31,16 +31,14 @@ public class NPC extends Person {
 		};
 		
 		this.discussion = new Discussion();
-		int i = this.discussion.addBlurb(new Blurb("Hello!"));
-		System.out.println(i);
 	}
 	
-	public int addBlurb(String content) {
-		return this.discussion.addBlurb(new Blurb(content));
+	public int addPrompt(Prompt prompt) {
+		return this.discussion.addPrompt(prompt);
 	}
 	
-	public String getNextBlurb() {
-		return this.discussion.getBlurb().content();
+	public Prompt getNextPrompt() {
+		return this.discussion.getPrompt();
 	}
 	
 }
