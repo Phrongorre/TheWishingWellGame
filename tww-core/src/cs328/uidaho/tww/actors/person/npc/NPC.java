@@ -30,8 +30,6 @@ public class NPC extends Person {
 			break;
 		};
 		
-		this.setBoundaryPolygon(this.getWidth()*1.5f, this.getWidth()*0.75f, 8);
-		
 		this.discussion = new Discussion();
 		int i = this.discussion.addBlurb(new Blurb("Hello!"));
 		System.out.println(i);

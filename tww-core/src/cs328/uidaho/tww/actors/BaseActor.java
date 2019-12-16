@@ -10,10 +10,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -41,12 +38,6 @@ public class BaseActor extends Group {
 	private float maxSpeed;
 	private float deceleration;
 	
-	/*** Collisions fields ***/
-	
-	protected Polygon boundaryPolygon;
-	protected Array<TextureRegion> collisionWireframes;
-	protected boolean wireframesVisible;
-	
 	/*** Constructors ***/
 	
 	public BaseActor(float x, float y, Stage s) {
@@ -66,16 +57,6 @@ public class BaseActor extends Group {
 		this.acceleration = 0f;
 		this.maxSpeed = 1000f;
 		this.deceleration = 0f;
-		//Collision field initialization
-		this.collisionWireframes = new Array<TextureRegion>();
-		Texture texture = new Texture(Gdx.files.internal("gui/collision_wireframe_rect.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		this.collisionWireframes.add(new TextureRegion(texture));
-		texture = new Texture(Gdx.files.internal("gui/collision_wireframe_round.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		this.collisionWireframes.add(new TextureRegion(texture));
-		
-		this.wireframesVisible = false;
 	}
 	
 	public BaseActor(Stage s) { this(0f, 0f, s); }
@@ -124,11 +105,6 @@ public class BaseActor extends Group {
 		float h = tr.getRegionHeight();
 		this.setSize(w, h);
 		this.setOrigin(w/2, h/2);
-		
-		//Since size was just set, set boundary rectangle
-		if (this.boundaryPolygon == null) {
-			this.setBoundaryRectangle();
-		}
 	}
 	
 	public void setAnimationPaused(boolean pause) {
@@ -287,94 +263,6 @@ public class BaseActor extends Group {
 		this.centerAtPosition(other.getX() + other.getWidth()/2, other.getY() + other.getHeight()/2);
 	}
 	
-	/*** Collisions methods ***/
-	
-	public void setBoundaryRectangle() {
-		this.setBoundaryRectangle(this.getWidth(), this.getHeight());
-	}
-	
-	public void setBoundaryRectangle(float w, float h) {
-		float[] vertices = {0f, 0f, w, 0f, w, h, 0f, h};
-		this.boundaryPolygon = new Polygon(vertices);
-	}
-	
-	public void setBoundaryPolygon(int numSides) {
-		this.setBoundaryPolygon(this.getWidth(), this.getHeight(), numSides);
-	}
-	
-	public void setBoundaryPolygon(float w, float h, int numSides) {
-		float[] vertices = new float[2*numSides];
-		
-		for (int i=0; i < numSides; i++) {
-			float angle = i * MathUtils.PI2 / numSides;
-			//x-coordinate
-			vertices[2*i] = w/2 * MathUtils.cos(angle) + w/2;
-			//y-coordinate
-			vertices[2*i+1] = h/2 * MathUtils.sin(angle) + h/2;
-		}
-		
-		this.boundaryPolygon = new Polygon(vertices);
-	}
-	
-	public Polygon getBoundaryPolygon() {
-		this.boundaryPolygon.setPosition(this.getX(), this.getY());
-		this.boundaryPolygon.setOrigin(this.getOriginX(), this.getOriginY());
-		this.boundaryPolygon.setRotation(this.getRotation());
-		this.boundaryPolygon.setScale(this.getScaleX(), this.getScaleY());
-		return this.boundaryPolygon;
-	}
-	
-	public boolean overlaps(BaseActor other) {
-		Polygon poly1 = this.getBoundaryPolygon();
-		Polygon poly2 = other.getBoundaryPolygon();
-		
-		//initial test to improve performance (MUCH more efficient collision detection algorithm)
-		if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle())) {
-			return false;
-		}
-		
-		return Intersector.overlapConvexPolygons(poly1, poly2);
-	}
-	
-	public boolean isWithinDistance(float distance, BaseActor other) {
-		Polygon poly1 = this.getBoundaryPolygon();
-		float scaleX = (this.getWidth() + 2 * distance) / this.getWidth();
-		float scaleY = (this.getHeight() + 2 * distance) / this.getHeight();
-		poly1.setScale(scaleX, scaleY);
-		
-		Polygon poly2 = other.getBoundaryPolygon();
-		
-		if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle())) {
-			return false;
-		}
-		
-		return Intersector.overlapConvexPolygons(poly1, poly2);
-	}
-	
-	public Vector2 preventOverlap(BaseActor other) {
-		Polygon poly1 = this.getBoundaryPolygon();
-		Polygon poly2 = other.getBoundaryPolygon();
-		
-		//initial test to improve performance
-		if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle())) {
-			return null;
-		}
-		
-		MinimumTranslationVector mtv = new MinimumTranslationVector();
-		boolean polygonOverlap = Intersector.overlapConvexPolygons(poly1, poly2, mtv);
-		
-		if (!polygonOverlap) {
-			return null;
-		}
-		
-		this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
-		return mtv.normal;
-	}
-	
-	public void setWireframesVisible(boolean visible) {
-		this.wireframesVisible = visible;
-	}
-	
 	/*** World boundary methods ***/
 	
 	public static void setWorldBounds(float width, float height) {
@@ -437,11 +325,16 @@ public class BaseActor extends Group {
 			cam.viewportWidth/2,
 			worldBounds.width - cam.viewportWidth/2
 		);
-		cam.position.y = MathUtils.clamp(
-			cam.position.y,
-			cam.viewportHeight/2,
-			worldBounds.height - cam.viewportHeight/2
-		);
+		if (cam.viewportHeight/2 > (worldBounds.height - cam.viewportHeight/2)) {
+			cam.position.y = cam.viewportHeight/2;
+		}
+		else {
+			cam.position.y = MathUtils.clamp(
+				cam.position.y,
+				cam.viewportHeight/2,
+				worldBounds.height - cam.viewportHeight/2
+			);
+		}
 		cam.update();
 	}
 	

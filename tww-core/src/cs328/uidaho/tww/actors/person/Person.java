@@ -1,45 +1,24 @@
 package cs328.uidaho.tww.actors.person;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cs328.uidaho.tww.actors.BaseActor;
+import cs328.uidaho.tww.actors.Collidable;
 
-public class Person extends BaseActor {
+public class Person extends Collidable {
 	
 	public Person(float x, float y, Stage s) {
 		super(x, y, s);
 	}
 	
 	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
+	public Animation<TextureRegion> loadTexture(String fileName) {
+		Animation<TextureRegion> anim = super.loadTexture(fileName);
 		
-		if (this.boundaryPolygon != null && this.wireframesVisible) {
-			Polygon bpoly = this.getBoundaryPolygon();
-			batch.draw(
-				this.collisionWireframes.get(1),
-				bpoly.getX(),
-				bpoly.getY(),
-				bpoly.getOriginX(),
-				bpoly.getOriginY(),
-				this.getWidth()*1.5f,
-				this.getWidth()*0.75f,
-				bpoly.getScaleX(),
-				bpoly.getScaleY(),
-				bpoly.getRotation()
-			);
-		}
-	}
-	
-	@Override
-	public Polygon getBoundaryPolygon() {
-		this.boundaryPolygon.setPosition(this.getX()-(this.getWidth()*1.5f-this.getWidth())/2f, this.getY()-(this.getWidth()*0.75f)/2f);
-		this.boundaryPolygon.setOrigin(this.getOriginX(), this.getOriginY());
-		this.boundaryPolygon.setRotation(this.getRotation());
-		this.boundaryPolygon.setScale(this.getScaleX(), this.getScaleY());
-		return this.boundaryPolygon;
+		this.setCollisionSize(this.getWidth()*1.5f, this.getWidth()*0.75f);
+		
+		return anim;
 	}
 	
 }

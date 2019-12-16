@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cs328.uidaho.tww.actors.BaseActor;
+import cs328.uidaho.tww.actors.person.npc.NPC;
 
 public class Player extends Person {
 	
@@ -23,7 +23,6 @@ public class Player extends Person {
 		
 		this.loadTexture("people/person_awm0.png");
 		
-		this.setBoundaryPolygon(this.getWidth()*1.5f, this.getWidth()*0.75f, 8);
 		this.setInteractionPolygon(8);
 	}
 	
@@ -44,6 +43,8 @@ public class Player extends Person {
 		
 		this.applyPhysics(dt);
 		this.boundToWorld();
+		
+		this.alignCamera();
 	}
 	
 	@Override
@@ -102,7 +103,7 @@ public class Player extends Person {
 		return this.interactionPolygon;
 	}
 	
-	public boolean interactsWith(BaseActor other) {
+	public boolean interactsWith(NPC other) {
 		Polygon poly1 = this.getInteractionPolygon();
 		Polygon poly2 = other.getBoundaryPolygon();
 		
