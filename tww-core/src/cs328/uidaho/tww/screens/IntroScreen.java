@@ -8,8 +8,8 @@ import cs328.uidaho.tww.actors.BaseActor;
 import cs328.uidaho.tww.actors.Building;
 import cs328.uidaho.tww.actors.Car;
 import cs328.uidaho.tww.actors.Collidable;
-import cs328.uidaho.tww.actors.person.Player;
 import cs328.uidaho.tww.actors.person.npc.NPC;
+import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.gui.DialogueBox;
 
 public class IntroScreen extends BaseScreen {
@@ -48,7 +48,7 @@ public class IntroScreen extends BaseScreen {
 		tree.setCollisionSize(tree.getWidth()/2f, tree.getWidth()/4f);
 		tree.setCollisionLocation(0f, 8f);
 		
-		player = new Player(0f, 0f, this.mainStage);
+		player = new Player(0f, 0f, this.mainStage, this.uiTable);
 		player.centerAtPosition(100f, 75f);
 		BaseActor.setWorldBounds(
 			ground.getWidth(),
@@ -69,24 +69,29 @@ public class IntroScreen extends BaseScreen {
 	public void update(float dt) {
 		for (BaseActor collidableActor : BaseActor.getList(this.mainStage, Collidable.class.getName())) {
 			Collidable collidable = (Collidable)collidableActor;
+			
 			if (collidable != player) {
 				player.preventOverlap(collidable);
 				player.adjustZIndex(collidable);				
 			}
+			
 			if (showWireframes) collidable.setWireframesVisible(true);
 		}
 		
 		for (BaseActor npcActor : BaseActor.getList(this.mainStage, NPC.class.getName())) {
 			NPC npc = (NPC)npcActor;
+			
 			if (player.interactsWith(npc) && Gdx.input.isKeyJustPressed(Keys.E)) {
 				dialogueBox.setText(npc.getNextBlurb());
 				dialogueBox.clearActions();
 				dialogueBox.setVisible(true);
-				dialogueBox.addAction(Actions.delay(3f, Actions.run(
-					() -> {
-						dialogueBox.setVisible(false);
-					}
-				)));
+				dialogueBox.addAction(
+					Actions.delay(3f, Actions.run(
+						() -> {
+							dialogueBox.setVisible(false);
+						}
+					)
+				));
 			 }
 		}
 	}

@@ -1,4 +1,4 @@
-package cs328.uidaho.tww.actors.person;
+package cs328.uidaho.tww.actors.person.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -7,14 +7,17 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import cs328.uidaho.tww.actors.person.Person;
 import cs328.uidaho.tww.actors.person.npc.NPC;
 
 public class Player extends Person {
 	
 	private Polygon interactionPolygon;
+	private Inventory inventory;
 	
-	public Player(float x, float y, Stage s) {
+	public Player(float x, float y, Stage s, Table uiTable) {
 		super(x, y, s);
 		
 		this.setMaxSpeed(80f);
@@ -24,6 +27,8 @@ public class Player extends Person {
 		this.loadTexture("people/person_awm0.png");
 		
 		this.setInteractionPolygon(8);
+		
+		this.inventory = new Inventory(uiTable);
 	}
 	
 	@Override
