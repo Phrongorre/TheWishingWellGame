@@ -20,17 +20,18 @@ public class Prompt {
 		}
 	}
 	
-	public void setPrompt(String prompt) {
+	public Prompt setPrompt(String prompt) {
 		this.prompt = prompt;
+		return this;
 	}
 	
 	public String prompt() {
 		return this.prompt;
 	}
 	
-	public int addResponse(String response, Prompt follow) {
+	public Prompt addResponse(String response, Prompt follow) {
 		this.responses.add(new Response(response, follow));
-		return this.responses.size-1;
+		return this;
 	}
 	
 	public String response(int index) {

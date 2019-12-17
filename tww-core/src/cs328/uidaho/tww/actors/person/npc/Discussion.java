@@ -18,15 +18,12 @@ public class Discussion {
 		return this.prompts.size > 0;
 	}
 	
-	public int addPrompt(Prompt prompt) {
-		if (prompt == null) { return -1; }
+	public Discussion addPrompt(Prompt prompt) {
+		if (prompt == null) { return this; }
 		if (!this.hasPrompts()) this.pIndex = 0;
 		this.prompts.add(prompt);
 		int index = this.prompts.size-1;
-		for (Prompt followPrompt : prompt.followPrompts()) {
-			this.addPrompt(followPrompt);
-		}
-		return index;
+		return this;
 	}
 	
 	public Prompt getPrompt(int pIndex) {

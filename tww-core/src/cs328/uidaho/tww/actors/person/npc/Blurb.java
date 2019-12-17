@@ -23,8 +23,8 @@ public class Blurb extends Prompt {
 	}
 	
 	@Override
-	public int addResponse(String response, Prompt follow) {
-		return -1;
+	public Prompt addResponse(String response, Prompt follow) {
+		return this;
 	}
 	
 }

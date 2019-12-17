@@ -15,6 +15,7 @@ import cs328.uidaho.tww.actors.Collidable;
 import cs328.uidaho.tww.actors.person.npc.Blurb;
 import cs328.uidaho.tww.actors.person.npc.NPC;
 import cs328.uidaho.tww.actors.person.npc.Prompt;
+import cs328.uidaho.tww.actors.person.npc.Prompt.Response;
 import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.gui.DialogueBox;
 
@@ -65,18 +66,17 @@ public class IntroScreen extends BaseScreen {
 		);
 		interacting = false;
 		
-		NPC npc;
-		Prompt prompt;
+		(new NPC(40f, 75f, this.mainStage)).addPrompt(new Blurb("What's up?"));
 		
-		npc = new NPC(40f, 75f, this.mainStage);
-		prompt = new Blurb("What's up?");
-		npc.addPrompt(prompt);
-		
-		npc = new NPC(30f, 65f, this.mainStage);
-		
-		prompt = new Blurb("Wha?");
-		prompt = new Blurb("How are you today?", prompt);
-		npc.addPrompt(prompt);
+		(new NPC(30f, 65f, this.mainStage)).addPrompt(
+			(new Prompt("How are you today?")).addResponse(
+				"I'm peachy!", (new Prompt("Wha?")).addResponse(
+					"I mean, I'm fine.", new Blurb("Oh, okay then.")
+				)
+			).addResponse(
+				"I'm great!", new Blurb("That's good to hear!")
+			)
+		);
 		
 		new Car(172f, 34f, this.mainStage);
 	}

@@ -33,7 +33,7 @@ public class NPC extends Person {
 		this.discussion = new Discussion();
 	}
 	
-	public int addPrompt(Prompt prompt) {
+	public Discussion addPrompt(Prompt prompt) {
 		return this.discussion.addPrompt(prompt);
 	}
 	
