@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Align;
 
 import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.actors.BaseActor;
@@ -35,9 +34,11 @@ public class IntroScreen extends BaseScreen {
 		dialogueBox = new DialogueBox(0f, 0f, this.uiStage);
 		dialogueBox.setVisible(false);
 		
-		this.uiTable.add().expandY();
+		this.uiTable.add().colspan(3).expandY();
 		this.uiTable.row();
+		this.uiTable.add().expandX();
 		this.uiTable.add(dialogueBox);
+		this.uiTable.add().expandX();
 		
 		BaseActor sky = new BaseActor(0f, 0f, this.mainStage);
 		sky.loadTexture("locations/clove_haven/sky.png");
@@ -72,6 +73,7 @@ public class IntroScreen extends BaseScreen {
 		npc.addPrompt(prompt);
 		
 		npc = new NPC(30f, 65f, this.mainStage);
+		
 		prompt = new Blurb("Wha?");
 		prompt = new Blurb("How are you today?", prompt);
 		npc.addPrompt(prompt);
@@ -87,27 +89,29 @@ public class IntroScreen extends BaseScreen {
 				Prompt prompt = promptHolder.prompt();
 				if (prompt == null) {
 					player.setInteracting(false);
-					dialogueBox.clear();
 					dialogueBox.setVisible(false);
 					return;
 				}
-				dialogueBox.clear();
+				dialogueBox.reset();
 				dialogueBox.setText(prompt.prompt());
 				
-				TextButton responseButton = new TextButton(prompt.response(0), BaseGame.textButtonStyle);
-				responseButton.addListener(
-					(Event e) -> {
-						if (!(e instanceof InputEvent) ||
-							!((InputEvent)e).getType().equals(Type.touchDown))
-						{ return false; }
-						
-						promptHolder.setPrompt(prompt.followResponse(0));
-						
-						return false;
-					}
-				);
-				
-				uiTable.add(responseButton);
+				for (int r=0; r < prompt.responseCount(); r++) {
+					TextButton responseButton = new TextButton(prompt.response(r), BaseGame.textButtonStyle);
+					final Prompt fp = prompt.followResponse(r);
+					responseButton.addListener(
+						(Event e) -> {
+							if (!(e instanceof InputEvent) ||
+								!((InputEvent)e).getType().equals(Type.touchDown))
+							{ return false; }
+							
+							promptHolder.setPrompt(fp);
+							
+							return false;
+						}
+					);
+					
+					dialogueBox.addTextButton(responseButton);
+				}
 			}
 		}
 		else {
