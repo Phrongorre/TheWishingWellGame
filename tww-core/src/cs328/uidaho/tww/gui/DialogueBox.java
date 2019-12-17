@@ -1,10 +1,10 @@
 package cs328.uidaho.tww.gui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 
 import cs328.uidaho.tww.BaseGame;
@@ -13,6 +13,7 @@ import cs328.uidaho.tww.actors.BaseActor;
 public class DialogueBox extends BaseActor {
 
 	private Label dialogueLabel;
+	private Table buttonTable;
 	private float padding = 16f;
 	
 	public DialogueBox(float x, float y, Stage s) {
@@ -28,6 +29,12 @@ public class DialogueBox extends BaseActor {
 	}
 	
 	public DialogueBox(Stage s) { this(0f, 0f, s); }
+	
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		
+	}
 	
 	public void setDialogueSize(float width, float height) {
 		this.setSize(width, height);
@@ -57,10 +64,6 @@ public class DialogueBox extends BaseActor {
 	
 	public void alignCenter() {
 		this.dialogueLabel.setAlignment(Align.center);
-	}
-	
-	public void addTextButton(TextButton textButton) {
-		
 	}
 	
 }
