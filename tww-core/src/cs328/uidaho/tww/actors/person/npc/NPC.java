@@ -5,10 +5,12 @@ import java.util.Random;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cs328.uidaho.tww.actors.person.Person;
+import cs328.uidaho.tww.actors.util.IInteractable;
 
-public class NPC extends Person {
+public class NPC extends Person implements IInteractable {
 	
 	private Discussion discussion;
+	private boolean interactable;
 	
 	public NPC(float x, float y, Stage s) {
 		super(x, y, s);
@@ -31,6 +33,8 @@ public class NPC extends Person {
 		};
 		
 		this.discussion = new Discussion();
+		
+		this.interactable = true;
 	}
 	
 	public Discussion addPrompt(Prompt prompt) {
@@ -39,6 +43,19 @@ public class NPC extends Person {
 	
 	public Prompt getNextPrompt() {
 		return this.discussion.getPrompt();
+	}
+
+	@Override
+	public boolean isInteractable() {
+		return this.interactable;
+	}
+	
+	@Override
+	public void interact() { }
+
+	@Override
+	public void setInteractable(boolean interactable) {
+		this.interactable = interactable;
 	}
 	
 }

@@ -7,10 +7,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import cs328.uidaho.tww.actors.person.Person;
-import cs328.uidaho.tww.actors.person.npc.NPC;
+import cs328.uidaho.tww.actors.util.IInteractable;
 
 public class Player extends Person {
 	
@@ -120,7 +119,7 @@ public class Player extends Person {
 		return this.interactionPolygon;
 	}
 	
-	public boolean interactsWith(NPC other) {
+	public boolean interactsWith(IInteractable other) {
 		Polygon poly1 = this.getInteractionPolygon();
 		Polygon poly2 = other.getBoundaryPolygon();
 		

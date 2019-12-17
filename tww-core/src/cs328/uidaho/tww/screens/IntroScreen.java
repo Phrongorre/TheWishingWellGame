@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 
 import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.actors.BaseActor;
@@ -15,7 +16,7 @@ import cs328.uidaho.tww.actors.Collidable;
 import cs328.uidaho.tww.actors.person.npc.Blurb;
 import cs328.uidaho.tww.actors.person.npc.NPC;
 import cs328.uidaho.tww.actors.person.npc.Prompt;
-import cs328.uidaho.tww.actors.person.npc.Prompt.Response;
+import cs328.uidaho.tww.actors.person.player.Item;
 import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.gui.DialogueBox;
 
@@ -35,11 +36,9 @@ public class IntroScreen extends BaseScreen {
 		dialogueBox = new DialogueBox(0f, 0f, this.uiStage);
 		dialogueBox.setVisible(false);
 		
-		this.uiTable.add().colspan(3).expandY();
+		this.uiTable.add().expandY();
 		this.uiTable.row();
-		this.uiTable.add().expandX();
-		this.uiTable.add(dialogueBox);
-		this.uiTable.add().expandX();
+		this.uiTable.add(dialogueBox).align(Align.center);
 		
 		BaseActor sky = new BaseActor(0f, 0f, this.mainStage);
 		sky.loadTexture("locations/clove_haven/sky.png");
@@ -50,22 +49,40 @@ public class IntroScreen extends BaseScreen {
 		BaseActor ground = new BaseActor(0f, 0f, this.mainStage);
 		ground.loadTexture("locations/clove_haven/ground.png");
 		
-		Building qualityDrug = new Building(200f, 63f, 92f, 16f, -2f/3f, "locations/clove_haven/quality_drug_open.png", this.mainStage);
-		qualityDrug.loadTexture("locations/clove_haven/quality_drug_open.png");	
+		new Building(
+			355f, 57f, //Location
+			100f, 12f, //Size
+			  3f,  6f, //Offsets
+			"locations/clove_haven/brickhaus_cafe_open.png", this.mainStage
+		);
+		new Building(
+			300f, 63f, //Location
+			 45f, 12f, //Size
+			  4f,  0f, //Offsets
+			"locations/clove_haven/books_shop_open.png", this.mainStage
+		);
+		new Building(
+			180f, 63f, //Location
+			 90f, 16f, //Size
+			  3f,  0f, //Offsets
+			"locations/clove_haven/quality_drug_open.png", this.mainStage
+		);
 		
-		Collidable tree = new Collidable(100f, 60f, this.mainStage);
+		Collidable tree = new Collidable(120f, 65f, this.mainStage);
 		tree.loadTexture("locations/clove_haven/tree.png");
 		tree.setCollisionSize(tree.getWidth()/2f, tree.getWidth()/4f);
 		tree.setCollisionLocation(0f, 8f);
 		
-		player = new Player(0f, 0f, this.mainStage);
-		player.centerAtPosition(100f, 75f);
+		new Item("key", 500f, 80f, this.mainStage);
+		
+		player = new Player(350f, 55f, this.mainStage);
 		BaseActor.setWorldBounds(
 			ground.getWidth(),
 			ground.getHeight() + player.getHeight() - player.getCollisionHeight()/2f
 		);
 		interacting = false;
 		
+		//Initialize NPCs
 		(new NPC(40f, 75f, this.mainStage)).addPrompt(new Blurb("What's up?"));
 		
 		(new NPC(30f, 65f, this.mainStage)).addPrompt(
@@ -78,7 +95,9 @@ public class IntroScreen extends BaseScreen {
 			)
 		);
 		
-		new Car(172f, 34f, this.mainStage);
+		new Car(114f + 58f*1, 33f, this.mainStage);
+		new Car(114f + 58f*2, 35f, this.mainStage);
+		new Car(114f + 58f*5, 34f, this.mainStage);
 	}
 
 	final PromptHolder promptHolder = new PromptHolder();
@@ -126,10 +145,20 @@ public class IntroScreen extends BaseScreen {
 				if (showWireframes) collidable.setWireframesVisible(true);
 			}
 			
+			for (BaseActor itemActor : BaseActor.getList(this.mainStage, Item.class.getName())) {
+				Item item = (Item)itemActor;
+				
+				if (player.interactsWith(item) && Gdx.input.isKeyJustPressed(Keys.E)) {
+					item.interact();
+					return; //Don't interact with any NPC's
+				}
+			}
+			
 			for (BaseActor npcActor : BaseActor.getList(this.mainStage, NPC.class.getName())) {
 				NPC npc = (NPC)npcActor;
 				
 				if (player.interactsWith(npc) && Gdx.input.isKeyJustPressed(Keys.E)) {
+					npc.interact();
 					dialogueBox.setVisible(true);
 					player.setInteracting(true);
 					promptHolder.setPrompt(npc.getNextPrompt());
