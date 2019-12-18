@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cs328.uidaho.tww.actors.person.Person;
+import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.actors.util.IInteractable;
 
 public class NPC extends Person implements IInteractable {
@@ -33,7 +34,6 @@ public class NPC extends Person implements IInteractable {
 		};
 		
 		this.discussion = new Discussion();
-		
 		this.interactable = true;
 	}
 	
@@ -51,7 +51,7 @@ public class NPC extends Person implements IInteractable {
 	}
 	
 	@Override
-	public void interact() { }
+	public void interact(Player interactingPlayer) { }
 
 	@Override
 	public void setInteractable(boolean interactable) {

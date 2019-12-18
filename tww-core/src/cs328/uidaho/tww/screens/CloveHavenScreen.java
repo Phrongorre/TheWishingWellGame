@@ -155,7 +155,7 @@ public class CloveHavenScreen extends BaseScreen {
 				Door door = (Door)doorActor;
 				
 				if (player.interactsWith(door) && Gdx.input.isKeyJustPressed(Keys.E)) {
-					door.interact();
+					door.interact(player);
 					return; //Don't interact with any NPC's
 				}
 			}
@@ -164,7 +164,7 @@ public class CloveHavenScreen extends BaseScreen {
 				Item item = (Item)itemActor;
 				
 				if (player.interactsWith(item) && Gdx.input.isKeyJustPressed(Keys.E)) {
-					item.interact();
+					item.interact(player);
 					return; //Don't interact with any NPC's
 				}
 			}
@@ -173,7 +173,7 @@ public class CloveHavenScreen extends BaseScreen {
 				NPC npc = (NPC)npcActor;
 				
 				if (player.interactsWith(npc) && Gdx.input.isKeyJustPressed(Keys.E)) {
-					npc.interact();
+					npc.interact(player);
 					dialogueBox.setVisible(true);
 					player.setInteracting(true);
 					promptHolder.setPrompt(npc.getNextPrompt());

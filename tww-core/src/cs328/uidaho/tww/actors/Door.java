@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.GameMetaData;
+import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.actors.util.IInteractable;
 import cs328.uidaho.tww.screens.BaseScreen;
 
@@ -49,7 +50,7 @@ public class Door extends Collidable implements IInteractable {
 	}
 
 	@Override
-	public void interact() {
+	public void interact(Player interactingPlayer) {
 		if (this.screenClass != null) {
 			try
 			{

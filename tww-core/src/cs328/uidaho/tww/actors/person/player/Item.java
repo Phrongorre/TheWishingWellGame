@@ -39,9 +39,10 @@ public class Item extends Collidable implements IInteractable {
 	}
 
 	@Override
-	public void interact() {
+	public void interact(Player interactingPlayer) {
 		System.out.print(this.id);
 		System.out.println(": " + this.name);
+		interactingPlayer.getInventory().addItem(this);
 	}
 
 	@Override

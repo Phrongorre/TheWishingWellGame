@@ -28,7 +28,7 @@ public abstract class Room extends BaseScreen {
 			Door door = (Door)doorActor;
 			
 			if (player.interactsWith(door) && Gdx.input.isKeyJustPressed(Keys.E)) {
-				door.interact();
+				door.interact(player);
 				return; //Don't interact with any NPC's
 			}
 		}

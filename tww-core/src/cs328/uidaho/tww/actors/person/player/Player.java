@@ -131,5 +131,9 @@ public class Player extends Person {
 		
 		return Intersector.overlapConvexPolygons(poly1, poly2);
 	}
+
+	public Inventory getInventory() {
+		return this.inventory;
+	}
 	
 }
