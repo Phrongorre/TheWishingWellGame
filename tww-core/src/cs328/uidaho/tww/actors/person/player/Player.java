@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import cs328.uidaho.tww.GameMetaData;
 import cs328.uidaho.tww.actors.person.Person;
 import cs328.uidaho.tww.actors.util.IInteractable;
 
@@ -17,8 +18,8 @@ public class Player extends Person {
 	private Inventory inventory;
 	private boolean interacting;
 	
-	public Player(float x, float y, Stage s) {
-		super(x, y, s);
+	public Player(Stage s) {
+		super(GameMetaData.getSpawnX(), GameMetaData.getSpawnY(), s);
 		
 		this.setMaxSpeed(80f);
 		this.setAcceleration(4000f);

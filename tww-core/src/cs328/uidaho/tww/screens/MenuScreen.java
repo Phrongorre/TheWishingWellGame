@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import cs328.uidaho.tww.BaseGame;
+import cs328.uidaho.tww.GameMetaData;
 
 public class MenuScreen extends BaseScreen {
 	
@@ -21,6 +22,7 @@ public class MenuScreen extends BaseScreen {
 					return false;
 				}
 				
+				GameMetaData.setSpawnLocation(350f, 55f);
 				BaseGame.setActiveScreen(new IntroScreen());
 				return false;
 			}

@@ -13,6 +13,7 @@ import cs328.uidaho.tww.actors.BaseActor;
 import cs328.uidaho.tww.actors.Building;
 import cs328.uidaho.tww.actors.Car;
 import cs328.uidaho.tww.actors.Collidable;
+import cs328.uidaho.tww.actors.Door;
 import cs328.uidaho.tww.actors.person.npc.Blurb;
 import cs328.uidaho.tww.actors.person.npc.NPC;
 import cs328.uidaho.tww.actors.person.npc.Prompt;
@@ -24,7 +25,7 @@ public class IntroScreen extends BaseScreen {
 
 	Player player;
 	DialogueBox dialogueBox;
-	boolean showWireframes = false;
+	boolean showWireframes = true;
 	boolean interacting;
 	
 	@Override
@@ -67,6 +68,7 @@ public class IntroScreen extends BaseScreen {
 			  3f,  0f, //Offsets
 			"locations/clove_haven/quality_drug_open.png", this.mainStage
 		);
+		new Door(267f, 63f, 100f, 50f, QualityDrugScreen.class, this.mainStage);
 		
 		Collidable tree = new Collidable(120f, 65f, this.mainStage);
 		tree.loadTexture("locations/clove_haven/tree.png");
@@ -75,12 +77,11 @@ public class IntroScreen extends BaseScreen {
 		
 		new Item("key", 500f, 80f, this.mainStage);
 		
-		player = new Player(350f, 55f, this.mainStage);
+		player = new Player(this.mainStage);
 		BaseActor.setWorldBounds(
 			ground.getWidth(),
 			ground.getHeight() + player.getHeight() - player.getCollisionHeight()/2f
 		);
-		interacting = false;
 		
 		//Initialize NPCs
 		(new NPC(40f, 75f, this.mainStage)).addPrompt(new Blurb("What's up?"));
@@ -143,6 +144,15 @@ public class IntroScreen extends BaseScreen {
 				}
 				
 				if (showWireframes) collidable.setWireframesVisible(true);
+			}
+			
+			for (BaseActor doorActor : BaseActor.getList(mainStage, Door.class.getName())) {
+				Door door = (Door)doorActor;
+				
+				if (player.interactsWith(door) && Gdx.input.isKeyJustPressed(Keys.E)) {
+					door.interact();
+					return; //Don't interact with any NPC's
+				}
 			}
 			
 			for (BaseActor itemActor : BaseActor.getList(this.mainStage, Item.class.getName())) {

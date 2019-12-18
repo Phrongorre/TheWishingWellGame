@@ -7,6 +7,7 @@ public class WishingWellGame extends BaseGame {
 	@Override
 	public void create() {
 		super.create();
+		GameMetaData.initialize();
 		BaseGame.setActiveScreen(new MenuScreen());
 	}
 	
