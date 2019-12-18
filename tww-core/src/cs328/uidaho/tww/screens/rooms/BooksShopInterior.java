@@ -14,7 +14,7 @@ public class BooksShopInterior extends Room {
 		this.loadPlayer();
 		
 		this.exitDoor.setPosition(57f, 0f);
-		this.exitDoor.setSpawnLocation(318f, 57f);
+		this.exitDoor.setSpawnLocation(218f, 57f);
 		this.exitDoor.setTargetScreen(CloveHavenScreen.class);
 		
 		//this.player.setWireframesVisible(true);

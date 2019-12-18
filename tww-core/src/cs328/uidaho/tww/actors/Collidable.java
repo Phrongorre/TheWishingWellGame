@@ -54,6 +54,13 @@ public class Collidable extends BaseActor {
 		this.collisionShape = COLLISION_ROUND;
 	}
 	
+	public Collidable(float x, float y, String textureFileName, Stage s) {
+		this(x, y, s);
+		this.loadTexture(textureFileName);
+		this.setCollisionSize(this.getWidth(), this.getWidth()/2f);
+		this.setCollisionLocation(0f, this.collisionHeight/3f);
+	}
+	
 	@Override
 	public void setAnimation(Animation<TextureRegion> animation) {
 		super.setAnimation(animation);

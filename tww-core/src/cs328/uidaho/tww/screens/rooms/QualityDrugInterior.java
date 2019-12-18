@@ -14,7 +14,7 @@ public class QualityDrugInterior extends Room {
 		this.loadPlayer();
 		
 		this.exitDoor.setPosition(165f, 0f);
-		this.exitDoor.setSpawnLocation(265f, 57f);
+		this.exitDoor.setSpawnLocation(165f, 57f);
 		this.exitDoor.setTargetScreen(CloveHavenScreen.class);
 		
 		//this.player.setWireframesVisible(true);

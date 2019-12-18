@@ -69,6 +69,10 @@ public class BaseActor extends Group {
 	}
 	
 	public BaseActor(Stage s) { this(0f, 0f, s); }
+	public BaseActor(float x, float y, String textureFileName, Stage s) {
+		this(x, y, s);
+		this.loadTexture(textureFileName);
+	}
 	public BaseActor(String textureFileName, Stage s) {
 		this(s);
 		this.loadTexture(textureFileName);

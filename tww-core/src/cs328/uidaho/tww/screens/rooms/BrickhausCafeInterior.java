@@ -14,7 +14,7 @@ public class BrickhausCafeInterior extends Room {
 		this.loadPlayer();
 		
 		this.exitDoor.setPosition(165f, 0f);
-		this.exitDoor.setSpawnLocation(438f, 57f);
+		this.exitDoor.setSpawnLocation(338f, 57f);
 		this.exitDoor.setTargetScreen(CloveHavenScreen.class);
 		
 		//this.player.setWireframesVisible(true);

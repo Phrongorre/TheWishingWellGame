@@ -28,7 +28,7 @@ public class CloveHavenScreen extends BaseScreen {
 
 	Player player;
 	DialogueBox dialogueBox;
-	boolean showWireframes = false;
+	boolean showWireframes = true;
 	boolean interacting;
 	
 	@Override
@@ -47,35 +47,39 @@ public class CloveHavenScreen extends BaseScreen {
 		new BaseActor("locations/clove_haven/sky.png", this.mainStage);
 		new BaseActor("locations/clove_haven/mountains.png", this.mainStage);
 		BaseActor ground = new BaseActor("locations/clove_haven/ground.png", this.mainStage);
+		new BaseActor(300f, 140f, "locations/clove_haven/clouds.png", this.mainStage);
+		
+		new Collidable(382f, 65f, "locations/clove_haven/bench.png", this.mainStage);
+		new Collidable(357f, 67f, "locations/clove_haven/bush.png", this.mainStage);
 		
 		new Building(
-			355f, 57f, //Location
+			255f, 57f, //Location
 			100f, 12f, //Size
 			  3f,  6f, //Offsets
-			"locations/clove_haven/brickhaus_cafe_open.png", this.mainStage
+			340f, 63f, 163f,  5f, BrickhausCafeInterior.class, //Door info
+			"clove_haven/brickhaus_cafe", this.mainStage
 		);
-		new Door(440f, 63f, 163f, 5f, BrickhausCafeInterior.class, this.mainStage);
 		new Building(
-			300f, 63f, //Location
+			200f, 63f, //Location
 			 45f, 12f, //Size
 			  4f,  0f, //Offsets
-			"locations/clove_haven/books_shop_open.png", this.mainStage
+			220f, 63f,  55f,  5f, BooksShopInterior.class, //Door info
+			"clove_haven/books_shop", this.mainStage
 		);
-		new Door(320f, 63f, 55f, 5f, BooksShopInterior.class, this.mainStage);
 		new Building(
-			180f, 63f, //Location
+			 80f, 63f, //Location
 			 90f, 16f, //Size
 			  3f,  0f, //Offsets
-			"locations/clove_haven/quality_drug_open.png", this.mainStage
+			167f, 63f, 163f,  5f, QualityDrugInterior.class, //Door info
+			"clove_haven/quality_drug", this.mainStage
 		);
-		new Door(267f, 63f, 163f, 5f, QualityDrugInterior.class, this.mainStage);
 		
-		Collidable tree = new Collidable(120f, 65f, this.mainStage);
+		Collidable tree = new Collidable(20f, 65f, this.mainStage);
 		tree.loadTexture("locations/clove_haven/tree.png");
 		tree.setCollisionSize(tree.getWidth()/2f, tree.getWidth()/4f);
 		tree.setCollisionLocation(0f, 8f);
 		
-		new Item("key", 500f, 80f, this.mainStage);
+		new Item("key", 400f, 80f, this.mainStage);
 		
 		player = new Player(this.mainStage);
 		BaseActor.setWorldBounds(
@@ -84,11 +88,11 @@ public class CloveHavenScreen extends BaseScreen {
 		);
 		
 		//Initialize NPCs
-		(new NPC(40f, 75f, "people/person_lwm0.png", this.mainStage)).addPrompt(
+		(new NPC(105f, 60f, "people/person_lwm0.png", this.mainStage)).addPrompt(
 			new Blurb("'Sup?")
 		);
 		
-		(new NPC(30f, 65f, "people/person_adm0.png", this.mainStage)).addPrompt(
+		(new NPC(120f, 57f, "people/person_adm0.png", this.mainStage)).addPrompt(
 			(new Prompt("How are you today?")).addResponse(
 				"I'm peachy!",
 				(new Prompt("Wha?")).addResponse(
