@@ -18,8 +18,8 @@ public class Door extends Collidable implements IInteractable {
 		super(x, y, s);
 		
 		this.setCollisionShape(COLLISION_SQUARE);
-		this.setCollisionSize(10f, 20f);
-		this.setCollisionLocation(0f, 10f);
+		this.setCollisionSize(15f, 5f);
+		this.setCollisionLocation(0f, 2.5f);
 		
 		this.interactable = true;
 		this.screenClass = targetScreenClass;
@@ -37,6 +37,11 @@ public class Door extends Collidable implements IInteractable {
 	@Override
 	public boolean isInteractable() {
 		return this.interactable;
+	}
+	
+	public void setSpawnLocation(float x, float y) {
+		this.spawnX = x;
+		this.spawnY = y;
 	}
 	
 	public void setTargetScreen(Class<? extends BaseScreen> screenClass) {

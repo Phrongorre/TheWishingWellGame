@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 public class BaseActor extends Group {
@@ -29,6 +30,11 @@ public class BaseActor extends Group {
 	private Animation<TextureRegion> animation;
 	private float elapsedTime;
 	private boolean animationPaused;
+	
+	/*** Z-Index fields ***/
+	
+	private float zChangeYleft;
+	private float zChangeYright;
 
 	/*** Physics fields ***/
 	
@@ -51,6 +57,9 @@ public class BaseActor extends Group {
 		this.animation = null;
 		this.elapsedTime = 0;
 		this.animationPaused = false;
+		//Z-Index field initialization
+		this.zChangeYleft  = 0f;
+		this.zChangeYright = 0f;
 		//Physics field initialization
 		this.velocityVec = new Vector2(0f, 0f);
 		this.accelerationVec = new Vector2(0f, 0f);
@@ -181,6 +190,44 @@ public class BaseActor extends Group {
 	
 	public void setOpacity(float opacity) {
 		this.getColor().a = opacity;
+	}
+	
+	/*** Z-Index Management ***/
+	
+	public void setZChangeY(float left, float right) {
+		this.zChangeYleft = left;
+		this.zChangeYright = right;
+	}
+	
+	public float getZChangeYleft() {
+		return this.zChangeYleft + this.getY();
+	}
+	
+	public float getZChangeYright() {
+		return this.zChangeYright + this.getY();
+	}
+	
+	public void adjustZIndex(BaseActor other) {
+		if (this.getX(Align.bottom) <= other.getX(Align.bottom)) {
+			if (this.getZIndex() < other.getZIndex() &&
+				this.getY() < other.getZChangeYleft()) {
+				this.setZIndex(other.getZIndex()+1);
+			}
+			else if (this.getZIndex() > other.getZIndex() &&
+				this.getY() >= other.getZChangeYleft()) {
+				other.setZIndex(this.getZIndex()+1);
+			}
+		}
+		else { //this.getX(Align.bottom) > other.getX(Align.bottom)
+			if (this.getZIndex() < other.getZIndex() &&
+				this.getY() < other.getZChangeYright()) {
+				this.setZIndex(other.getZIndex()+1);
+			}
+			else if (this.getZIndex() > other.getZIndex() &&
+				this.getY() >= other.getZChangeYright()) {
+				other.setZIndex(this.getZIndex()+1);
+			}
+		}
 	}
 	
 	/*** Physics methods ***/

@@ -95,7 +95,7 @@ public class Player extends Person {
 	}
 	
 	public void setInteractionPolygon(int numSides) {
-		this.setInteractionPolygon(this.getWidth()*4f, this.getWidth()*2f, numSides);
+		this.setInteractionPolygon(this.getWidth()*6f, this.getWidth()*3f, numSides);
 	}
 	
 	public void setInteractionPolygon(float w, float h, int numSides) {

@@ -20,12 +20,15 @@ import cs328.uidaho.tww.actors.person.npc.Prompt;
 import cs328.uidaho.tww.actors.person.player.Item;
 import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.gui.DialogueBox;
+import cs328.uidaho.tww.screens.rooms.BooksShopInterior;
+import cs328.uidaho.tww.screens.rooms.BrickhausCafeInterior;
+import cs328.uidaho.tww.screens.rooms.QualityDrugInterior;
 
-public class IntroScreen extends BaseScreen {
+public class CloveHavenScreen extends BaseScreen {
 
 	Player player;
 	DialogueBox dialogueBox;
-	boolean showWireframes = true;
+	boolean showWireframes = false;
 	boolean interacting;
 	
 	@Override
@@ -56,19 +59,21 @@ public class IntroScreen extends BaseScreen {
 			  3f,  6f, //Offsets
 			"locations/clove_haven/brickhaus_cafe_open.png", this.mainStage
 		);
+		new Door(440f, 63f, 163f, 5f, BrickhausCafeInterior.class, this.mainStage);
 		new Building(
 			300f, 63f, //Location
 			 45f, 12f, //Size
 			  4f,  0f, //Offsets
 			"locations/clove_haven/books_shop_open.png", this.mainStage
 		);
+		new Door(320f, 63f, 55f, 5f, BooksShopInterior.class, this.mainStage);
 		new Building(
 			180f, 63f, //Location
 			 90f, 16f, //Size
 			  3f,  0f, //Offsets
 			"locations/clove_haven/quality_drug_open.png", this.mainStage
 		);
-		new Door(267f, 63f, 100f, 50f, QualityDrugScreen.class, this.mainStage);
+		new Door(267f, 63f, 163f, 5f, QualityDrugInterior.class, this.mainStage);
 		
 		Collidable tree = new Collidable(120f, 65f, this.mainStage);
 		tree.loadTexture("locations/clove_haven/tree.png");

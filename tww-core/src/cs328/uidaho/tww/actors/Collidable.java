@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 public class Collidable extends BaseActor {
@@ -25,8 +24,6 @@ public class Collidable extends BaseActor {
 	protected Array<TextureRegion> collisionWireframes;
 	protected boolean wireframesVisible;
 	
-	protected float zChangeYleft;
-	protected float zChangeYright;
 	protected float collisionWidth;
 	protected float collisionHeight;
 	protected float collisionX;
@@ -48,8 +45,6 @@ public class Collidable extends BaseActor {
 		
 		this.wireframesVisible = false;
 		
-		this.zChangeYleft    = 0f;
-		this.zChangeYright   = 0f;
 		this.collisionWidth  = 0f;
 		this.collisionHeight = 0f;
 		this.collisionX      = 0f;
@@ -169,19 +164,6 @@ public class Collidable extends BaseActor {
 		this.collisionShape = shape;
 	}
 	
-	public void setZChangeY(float left, float right) {
-		this.zChangeYleft = left;
-		this.zChangeYright = right;
-	}
-	
-	public float getZChangeYleft() {
-		return this.zChangeYleft + this.getY();
-	}
-	
-	public float getZChangeYright() {
-		return this.zChangeYright + this.getY();
-	}
-	
 	public void setCollisionSize(float w, float h) {
 		this.collisionWidth  = w;
 		this.collisionHeight = h;
@@ -208,29 +190,6 @@ public class Collidable extends BaseActor {
 		this.collisionX = x;
 		this.collisionY = y;
 		this.setZChangeY(y, y);
-	}
-	
-	public void adjustZIndex(Collidable other) {
-		if (this.getX(Align.bottom) <= other.getX(Align.bottom)) {
-			if (this.getZIndex() < other.getZIndex() &&
-				this.getY() < other.getZChangeYleft()) {
-				this.setZIndex(other.getZIndex()+1);
-			}
-			else if (this.getZIndex() > other.getZIndex() &&
-				this.getY() >= other.getZChangeYleft()) {
-				other.setZIndex(this.getZIndex()+1);
-			}
-		}
-		else { //this.getX(Align.bottom) > other.getX(Align.bottom)
-			if (this.getZIndex() < other.getZIndex() &&
-				this.getY() < other.getZChangeYright()) {
-				this.setZIndex(other.getZIndex()+1);
-			}
-			else if (this.getZIndex() > other.getZIndex() &&
-				this.getY() >= other.getZChangeYright()) {
-				other.setZIndex(this.getZIndex()+1);
-			}
-		}
 	}
 	
 	@Override
