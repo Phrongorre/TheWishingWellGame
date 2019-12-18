@@ -12,6 +12,11 @@ public class Prompt {
 		this.responses = new Array<Response>();
 	}
 	
+	public Prompt(String prompt, Response response) {
+		this(prompt);
+		this.responses.add(response);
+	}
+	
 	public void copy(Prompt other) {
 		this.prompt = other.prompt;
 		this.responses.clear();
@@ -31,6 +36,11 @@ public class Prompt {
 	
 	public Prompt addResponse(String response, Prompt follow) {
 		this.responses.add(new Response(response, follow));
+		return this;
+	}
+	
+	public Prompt addResponse(Response response) {
+		this.responses.add(response);
 		return this;
 	}
 	
@@ -80,18 +90,6 @@ public class Prompt {
 		Response response = this.responses.get(index);
 		if (response != null) return response.follow;
 		return null;
-	}
-	
-	public class Response {
-		
-		public String response;
-		public Prompt follow;
-		
-		public Response(String response, Prompt follow) {
-			this.response = response;
-			this.follow = follow;
-		}
-		
 	}
 	
 }

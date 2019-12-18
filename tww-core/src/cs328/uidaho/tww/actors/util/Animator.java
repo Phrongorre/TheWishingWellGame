@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import cs328.uidaho.tww.actors.BaseActor2;
+import cs328.uidaho.tww.actors.BaseActor;
 
 public class Animator
 {
@@ -19,16 +19,16 @@ public class Animator
 	private int facing;
 	private int motion;
 	
-	private BaseActor2 baseActor2;
+	private BaseActor baseActor;
 	private Array<Animation<TextureRegion>> anims;
 	private Array<AnimationLR> animlrs;
 	private int activeAnimIndex;
 	private float stateTime;
 	private boolean animationPaused;
 	
-	public Animator(BaseActor2 ba2)
+	public Animator(BaseActor ba)
 	{
-		this.baseActor2 = ba2;
+		this.baseActor = ba;
 		this.anims = new Array<Animation<TextureRegion>>();
 		this.activeAnimIndex = -1;
 		this.stateTime = 0f;
@@ -94,14 +94,8 @@ public class Animator
 		TextureRegion tr = this.anims.get(this.activeAnimIndex).getKeyFrame(0f);
 		float w = tr.getRegionWidth();
 		float h = tr.getRegionHeight();
-		this.baseActor2.setSize(w, h);
-		this.baseActor2.setOrigin(w/2, h/2);
-		
-		//Since size was just set, set boundary rectangle
-		if (!this.baseActor2.hasBoundaryPolygon())
-		{
-			this.baseActor2.setBoundaryRectangle();
-		}
+		this.baseActor.setSize(w, h);
+		this.baseActor.setOrigin(w/2, h/2);
 	}
 	
 	public boolean hasAnimation()
@@ -176,7 +170,7 @@ public class Animator
 	
 	public Animation<TextureRegion> loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop)
 	{
-		return this.loadAnimationFromFiles(fileNames, frameDuration, loop, TextureFilter.Linear, TextureFilter.Linear);
+		return this.loadAnimationFromFiles(fileNames, frameDuration, loop, TextureFilter.Nearest, TextureFilter.Nearest);
 	}
 	
 	public Animation<TextureRegion> loadAnimationFromSheet(String fileName, int rows, int cols, float frameDuration, boolean loop,
@@ -225,7 +219,7 @@ public class Animator
 	
 	public Animation<TextureRegion> loadAnimationFromSheet(String fileName, int rows, int cols, float frameDuration, boolean loop)
 	{
-		return loadAnimationFromSheet(fileName, rows, cols, frameDuration, loop, TextureFilter.Linear, TextureFilter.Linear);
+		return loadAnimationFromSheet(fileName, rows, cols, frameDuration, loop, TextureFilter.Nearest, TextureFilter.Nearest);
 	}
 	
 	public Animation<TextureRegion> loadTexture(String fileName, TextureFilter minFilter, TextureFilter magFilter)
@@ -237,7 +231,7 @@ public class Animator
 	
 	public Animation<TextureRegion> loadTexture(String fileName)
 	{
-		return this.loadTexture(fileName, TextureFilter.Linear, TextureFilter.Linear);
+		return this.loadTexture(fileName, TextureFilter.Nearest, TextureFilter.Nearest);
 	}
 	
 	public Animation<TextureRegion> loadTextureFromSegment(String filename, int u, int v, int w, int h, TextureFilter minFilter, TextureFilter magFilter)
@@ -273,6 +267,6 @@ public class Animator
 	
 	public void setOpacity(float opacity)
 	{
-		this.baseActor2.getColor().a = opacity;
+		this.baseActor.getColor().a = opacity;
 	}
 }

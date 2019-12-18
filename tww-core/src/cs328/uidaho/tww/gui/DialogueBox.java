@@ -21,7 +21,7 @@ public class DialogueBox extends BaseActor {
 		
 		this.dialogueTable = new Table();
 		
-		this.loadTexture("gui/dialog-translucent.png");
+		this.animator.loadTexture("gui/dialog-translucent.png");
 		this.dialogueLabel = new Label(" ", BaseGame.labelStyle);
 		this.dialogueLabel.setWrap(true);
 		this.alignTopLeft();

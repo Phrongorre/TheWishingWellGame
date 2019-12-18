@@ -20,7 +20,7 @@ public class SetAnimationAction extends Action
 	public boolean act(float dt)
 	{
 		BaseActor ba = (BaseActor)this.target;
-		ba.setAnimation(this.animationToDisplay);
+		ba.getAnimator().setAnimation(this.animationToDisplay);
 		return true;
 	}
 	

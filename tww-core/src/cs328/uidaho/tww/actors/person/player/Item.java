@@ -24,8 +24,8 @@ public class Item extends Collidable implements IInteractable {
 		this.id = Item.ID++;
 		this.name = name;
 		
-		this.worldAnimation = this.loadTexture("items/" + name + "_world.png");
-		this.inventoryAnimation = this.loadTexture("items/" + name + "_inventory.png");
+		this.worldAnimation = this.animator.loadTexture("items/" + name + "_world.png");
+		this.inventoryAnimation = this.animator.loadTexture("items/" + name + "_inventory.png");
 		
 		this.setAnimation(this.worldAnimation);
 		

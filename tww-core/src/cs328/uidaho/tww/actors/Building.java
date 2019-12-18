@@ -19,8 +19,8 @@ public class Building extends Collidable {
 	) {
 		super(x, y, s);
 		
-		this.openAnimation = this.loadTexture("locations/" + buildingName + "_open.png");
-		this.closedAnimation = this.loadTexture("locations/" + buildingName + "_closed.png");
+		this.openAnimation = this.animator.loadTexture("locations/" + buildingName + "_open.png");
+		this.closedAnimation = this.animator.loadTexture("locations/" + buildingName + "_closed.png");
 		this.entranceDoor = new Door(doorX, doorY, doorSpawnX, doorSpawnY, interiorRoomClass, s);
 		this.open();
 		

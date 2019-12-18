@@ -31,16 +31,10 @@ public abstract class BaseGame extends Game {
 		Gdx.input.setInputProcessor(im);
 		
 		BaseGame.labelStyle = new LabelStyle();
-		//HIERO-GENERATED METHOD
-		//this.labelStyle.font = new BitmapFont(Gdx.files.internal("cooper.fnt"));
-		//FREETYPEFONTGENERATOR METHOD
 		FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("gui/fonts/the-wishing-well/the-wishing-well.ttf"));
 		FreeTypeFontParameter fontParameters = new FreeTypeFontParameter();
-		fontParameters.size = 32;
+		fontParameters.size = 24;
 		fontParameters.color = Color.BLACK;
-		fontParameters.borderWidth = 1;
-		fontParameters.borderColor = Color.WHITE;
-		fontParameters.borderStraight = true;
 		fontParameters.minFilter = TextureFilter.Nearest;
 		fontParameters.magFilter = TextureFilter.Nearest;
 		BitmapFont customFont = fontGenerator.generateFont(fontParameters);

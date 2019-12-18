@@ -2,11 +2,8 @@ package cs328.uidaho.tww.actors;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,7 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
+
+import cs328.uidaho.tww.actors.util.Animator;
 
 public class BaseActor extends Group {
 	
@@ -27,9 +25,10 @@ public class BaseActor extends Group {
 	
 	/*** Animation fields ***/
 	
-	private Animation<TextureRegion> animation;
-	private float elapsedTime;
-	private boolean animationPaused;
+//	private Animation<TextureRegion> animation;
+//	private float elapsedTime;
+//	private boolean animationPaused;
+	protected Animator animator;
 	
 	/*** Z-Index fields ***/
 	
@@ -54,9 +53,10 @@ public class BaseActor extends Group {
 		s.addActor(this);
 		
 		//Animation field initialization
-		this.animation = null;
-		this.elapsedTime = 0;
-		this.animationPaused = false;
+//		this.animation = null;
+//		this.elapsedTime = 0;
+//		this.animationPaused = false;
+		this.animator = new Animator(this);
 		//Z-Index field initialization
 		this.zChangeYleft  = 0f;
 		this.zChangeYright = 0f;
@@ -71,11 +71,11 @@ public class BaseActor extends Group {
 	public BaseActor(Stage s) { this(0f, 0f, s); }
 	public BaseActor(float x, float y, String textureFileName, Stage s) {
 		this(x, y, s);
-		this.loadTexture(textureFileName);
+		this.animator.loadTexture(textureFileName);
 	}
 	public BaseActor(String textureFileName, Stage s) {
 		this(s);
-		this.loadTexture(textureFileName);
+		this.animator.loadTexture(textureFileName);
 	}
 	
 	/*** Overridden utility methods ***/
@@ -84,9 +84,13 @@ public class BaseActor extends Group {
 	public void act(float dt) {
 		super.act(dt);
 		
+		/*
 		if (!this.animationPaused) {
 			this.elapsedTime += dt;
 		}
+		*/
+		
+		this.animator.update(dt);
 	}
 	
 	@Override
@@ -95,9 +99,10 @@ public class BaseActor extends Group {
 		Color c = this.getColor();
 		batch.setColor(c);
 		
-		if (this.animation != null && this.isVisible()) {
+		if (this.animator != null && this.animator.hasAnimation() && this.isVisible()) {
 			batch.draw(
-				this.animation.getKeyFrame(this.elapsedTime),
+				//this.animation.getKeyFrame(this.elapsedTime),
+				this.animator.getKeyFrame(),
 				this.getX(),
 				this.getY(),
 				this.getOriginX(),
@@ -114,6 +119,12 @@ public class BaseActor extends Group {
 	}
 	
 	/*** Animation methods ***/
+	
+	public Animator getAnimator() {
+		return this.animator;
+	}
+	
+	/*
 	
 	public void setAnimation(Animation<TextureRegion> animation) {
 		this.animation = animation;
@@ -199,6 +210,8 @@ public class BaseActor extends Group {
 	public void setOpacity(float opacity) {
 		this.getColor().a = opacity;
 	}
+	
+	*/
 	
 	/*** Z-Index Management ***/
 	
@@ -419,6 +432,14 @@ public class BaseActor extends Group {
 	
 	public static int count(Stage stage, String className) {
 		return BaseActor.getList(stage, className).size();
+	}
+
+	public Animation<TextureRegion> loadTexture(String fileName) {
+		return this.animator.loadTexture(fileName);
+	}
+
+	public void setAnimation(Animation<TextureRegion> animation) {
+		this.animator.setAnimation(animation);
 	}
 	
 }

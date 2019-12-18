@@ -15,8 +15,10 @@ import cs328.uidaho.tww.actors.Car;
 import cs328.uidaho.tww.actors.Collidable;
 import cs328.uidaho.tww.actors.Door;
 import cs328.uidaho.tww.actors.person.npc.Blurb;
+import cs328.uidaho.tww.actors.person.npc.Discussion;
 import cs328.uidaho.tww.actors.person.npc.NPC;
 import cs328.uidaho.tww.actors.person.npc.Prompt;
+import cs328.uidaho.tww.actors.person.npc.Response;
 import cs328.uidaho.tww.actors.person.player.Item;
 import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.gui.DialogueBox;
@@ -28,7 +30,7 @@ public class CloveHavenScreen extends BaseScreen {
 
 	Player player;
 	DialogueBox dialogueBox;
-	boolean showWireframes = true;
+	boolean showWireframes = false;
 	boolean interacting;
 	
 	@Override
@@ -92,18 +94,25 @@ public class CloveHavenScreen extends BaseScreen {
 			new Blurb("'Sup?")
 		);
 		
-		(new NPC(120f, 57f, "people/person_adm0.png", this.mainStage)).addPrompt(
-			(new Prompt("How are you today?")).addResponse(
-				"I'm peachy!",
-				(new Prompt("Wha?")).addResponse(
-					"I mean, I'm fine.",
-					new Blurb("Oh, okay then.")
-				)
-			).addResponse(
-				"I'm great!",
-				new Blurb("That's good to hear!")
-			)
+		Discussion disc = new Discussion();
+		Response busy = new Response(
+			"Not now, I'm busy.",
+			new Blurb("Oh, okay...", new Blurb("Bye"))
 		);
+		
+		disc.addPrompt(
+			(new Prompt("Hey, do you think you could help me?")).addResponse(
+				"Sure, what's up?",
+				new Blurb("Great!",
+					(new Prompt("Could you bring me a soda?")).addResponse(
+						"Sure thing!",
+						new Blurb("Great, thanks!")
+					).addResponse(busy)
+				)
+			).addResponse(busy)
+		);
+		
+		(new NPC(120f, 57f, "people/person_adm0.png", this.mainStage)).setDiscussion(disc);
 		
 		new Car(1, "locations/clove_haven/car_black.png", this.mainStage);
 		new Car(2, "locations/clove_haven/car_red.png",   this.mainStage);

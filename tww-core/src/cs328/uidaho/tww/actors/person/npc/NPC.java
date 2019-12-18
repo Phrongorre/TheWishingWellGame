@@ -1,5 +1,7 @@
 package cs328.uidaho.tww.actors.person.npc;
 
+import java.util.Random;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cs328.uidaho.tww.actors.person.Person;
@@ -11,10 +13,9 @@ public class NPC extends Person implements IInteractable {
 	private Discussion discussion;
 	private boolean interactable;
 	
-	public NPC(float x, float y, String textureFileName, Stage s) {
+	public NPC(float x, float y, Stage s) {
 		super(x, y, s);
 		
-		/*
 		Random random = new Random();
 		int r = random.nextInt(4);
 		switch (r) {
@@ -31,12 +32,23 @@ public class NPC extends Person implements IInteractable {
 			this.loadTexture("people/person_ldm0.png");
 			break;
 		};
-		*/
+		
+		this.discussion = new Discussion();
+		this.interactable = true;
+	}
+	
+	public NPC(float x, float y, String textureFileName, Stage s) {
+		super(x, y, s);
 		
 		this.loadTexture(textureFileName);
 		
 		this.discussion = new Discussion();
 		this.interactable = true;
+	}
+	
+	public NPC setDiscussion(Discussion discussion) {
+		this.discussion = discussion;
+		return this;
 	}
 	
 	public Discussion addPrompt(Prompt prompt) {
