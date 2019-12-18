@@ -2,8 +2,6 @@ package cs328.uidaho.tww.actors.person.npc;
 
 import com.badlogic.gdx.utils.Array;
 
-import cs328.uidaho.tww.actors.person.npc.Prompt.Response;
-
 public class Discussion {
 	
 	private Array<Prompt> prompts;
@@ -22,7 +20,6 @@ public class Discussion {
 		if (prompt == null) { return this; }
 		if (!this.hasPrompts()) this.pIndex = 0;
 		this.prompts.add(prompt);
-		int index = this.prompts.size-1;
 		return this;
 	}
 	
