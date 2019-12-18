@@ -32,5 +32,9 @@ public class Inventory {
 		
 		return null;
 	}
+
+	public Item[] items() {
+		return this.contents.items;
+	}
 	
 }

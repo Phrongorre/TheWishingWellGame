@@ -44,14 +44,9 @@ public class CloveHavenScreen extends BaseScreen {
 		this.uiTable.row();
 		this.uiTable.add(dialogueBox).align(Align.center);
 		
-		BaseActor sky = new BaseActor(0f, 0f, this.mainStage);
-		sky.loadTexture("locations/clove_haven/sky.png");
-		
-		BaseActor mountains = new BaseActor(0f, 0f, this.mainStage);
-		mountains.loadTexture("locations/clove_haven/mountains.png");
-		
-		BaseActor ground = new BaseActor(0f, 0f, this.mainStage);
-		ground.loadTexture("locations/clove_haven/ground.png");
+		new BaseActor("locations/clove_haven/sky.png", this.mainStage);
+		new BaseActor("locations/clove_haven/mountains.png", this.mainStage);
+		BaseActor ground = new BaseActor("locations/clove_haven/ground.png", this.mainStage);
 		
 		new Building(
 			355f, 57f, //Location
@@ -89,29 +84,37 @@ public class CloveHavenScreen extends BaseScreen {
 		);
 		
 		//Initialize NPCs
-		(new NPC(40f, 75f, this.mainStage)).addPrompt(new Blurb("What's up?"));
+		(new NPC(40f, 75f, "people/person_lwm0.png", this.mainStage)).addPrompt(
+			new Blurb("'Sup?")
+		);
 		
-		(new NPC(30f, 65f, this.mainStage)).addPrompt(
+		(new NPC(30f, 65f, "people/person_adm0.png", this.mainStage)).addPrompt(
 			(new Prompt("How are you today?")).addResponse(
-				"I'm peachy!", (new Prompt("Wha?")).addResponse(
-					"I mean, I'm fine.", new Blurb("Oh, okay then.")
+				"I'm peachy!",
+				(new Prompt("Wha?")).addResponse(
+					"I mean, I'm fine.",
+					new Blurb("Oh, okay then.")
 				)
 			).addResponse(
-				"I'm great!", new Blurb("That's good to hear!")
+				"I'm great!",
+				new Blurb("That's good to hear!")
 			)
 		);
 		
-		new Car(114f + 58f*1, 33f, this.mainStage);
-		new Car(114f + 58f*2, 35f, this.mainStage);
-		new Car(114f + 58f*5, 34f, this.mainStage);
+		new Car(1, "locations/clove_haven/car_black.png", this.mainStage);
+		new Car(2, "locations/clove_haven/car_red.png",   this.mainStage);
+		new Car(5, "locations/clove_haven/car_white.png", this.mainStage);
 	}
 
 	final PromptHolder promptHolder = new PromptHolder();
 	@Override
 	public void update(float dt) {
 		if (player.isInteracting()) {
+			
+			//If prompt has changed, build a new prompt DialogueBox setup
 			if (promptHolder.hasChanged()) {
 				Prompt prompt = promptHolder.prompt();
+				//If out of prompts, then interaction is finished
 				if (prompt == null) {
 					player.setInteracting(false);
 					dialogueBox.setVisible(false);
@@ -138,8 +141,10 @@ public class CloveHavenScreen extends BaseScreen {
 					dialogueBox.addTextButton(responseButton);
 				}
 			}
+			
 		}
 		else {
+			
 			for (BaseActor collidableActor : BaseActor.getList(this.mainStage, Collidable.class.getName())) {
 				Collidable collidable = (Collidable)collidableActor;
 				
@@ -156,7 +161,7 @@ public class CloveHavenScreen extends BaseScreen {
 				
 				if (player.interactsWith(door) && Gdx.input.isKeyJustPressed(Keys.E)) {
 					door.interact(player);
-					return; //Don't interact with any NPC's
+					return; //Don't interact with anything else
 				}
 			}
 			
@@ -165,7 +170,7 @@ public class CloveHavenScreen extends BaseScreen {
 				
 				if (player.interactsWith(item) && Gdx.input.isKeyJustPressed(Keys.E)) {
 					item.interact(player);
-					return; //Don't interact with any NPC's
+					return; //Don't interact with anything else
 				}
 			}
 			
@@ -180,6 +185,7 @@ public class CloveHavenScreen extends BaseScreen {
 					return;
 				}
 			}
+			
 		}
 	}
 	

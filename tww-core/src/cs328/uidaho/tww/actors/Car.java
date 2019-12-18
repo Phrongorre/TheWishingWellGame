@@ -27,4 +27,11 @@ public class Car extends Collidable {
 		this.setCollisionLocation(0f, this.collisionHeight/2f);
 	}
 	
+	public Car(int parkingSpotIndex, String textureFileName, Stage s) {
+		super(114f + 58f*parkingSpotIndex, 33f, s);
+		this.loadTexture(textureFileName);
+		this.setCollisionSize(this.getWidth(), this.getHeight()/2f);
+		this.setCollisionLocation(0f, this.collisionHeight/2f);
+	}
+	
 }
