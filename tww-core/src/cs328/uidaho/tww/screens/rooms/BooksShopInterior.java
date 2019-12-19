@@ -1,9 +1,14 @@
 package cs328.uidaho.tww.screens.rooms;
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
+import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.actors.BaseActor;
+import cs328.uidaho.tww.actors.collidables.person.npc.ActionPrompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.Blurb;
 import cs328.uidaho.tww.actors.collidables.person.npc.NPC;
 import cs328.uidaho.tww.screens.CloveHavenScreen;
+import cs328.uidaho.tww.screens.ExitScreen;
 
 public class BooksShopInterior extends Room {
 
@@ -23,7 +28,16 @@ public class BooksShopInterior extends Room {
 			new Blurb("So you finally found me.",
 				new Blurb("I hope it was worth the effort.",
 					new Blurb("After all...",
-						new Blurb("There's only so much to do in this town."))
+						(new ActionPrompt("There's only so much to do in this town.")).setPromptAction(Actions.sequence(
+							Actions.delay(3f),
+							//Actions.fadeOut(2f),
+							Actions.run(
+								() -> {
+									BaseGame.setActiveScreen(new ExitScreen());
+								}
+							)
+						)).addResponse("Next", null)
+					)
 				)
 			)
 		);

@@ -6,14 +6,14 @@ import com.badlogic.gdx.utils.Array;
 
 import cs328.uidaho.tww.GameMetaData;
 
-public class LockPrompt extends Prompt {
+public class GatedPrompt extends Prompt {
 	
 	private String unlockItemName;
 	private Action unlockAction;
 	private Array<Response> lockedResponses;
 	private Array<Response> unlockedResponses;
 	
-	public LockPrompt(String prompt, String unlockItemName) {
+	public GatedPrompt(String prompt, String unlockItemName) {
 		super(prompt);
 		
 		this.unlockItemName = unlockItemName;
@@ -34,24 +34,24 @@ public class LockPrompt extends Prompt {
 	}
 	
 	@Override
-	public LockPrompt addResponse(String response, Prompt follow) {
+	public GatedPrompt addResponse(String response, Prompt follow) {
 		this.addLockedResponse(response, follow);
 		this.addUnlockedResponse(response, follow);
 		return this;
 	}
 	
-	public LockPrompt addLockedResponse(String response, Prompt follow) {
+	public GatedPrompt addLockedResponse(String response, Prompt follow) {
 		this.lockedResponses.add(new Response(response, follow));
 		return this;
 	}
 	
-	public LockPrompt addUnlockedResponse(String response, Prompt follow) {
+	public GatedPrompt addUnlockedResponse(String response, Prompt follow) {
 		this.unlockedResponses.add(new Response(response, follow));
 		return this;
 	}
 	
 	@Override
-	public LockPrompt addResponse(Response response) {
+	public GatedPrompt addResponse(Response response) {
 		this.addLockedResponse(response.response(), response.follow());
 		this.addUnlockedResponse(response.response(), response.follow());
 		return this;
@@ -103,7 +103,7 @@ public class LockPrompt extends Prompt {
 		}
 	}
 
-	public LockPrompt addLockedResponse(Response response) {
+	public GatedPrompt addLockedResponse(Response response) {
 		this.lockedResponses.add(response);
 		return this;
 	}

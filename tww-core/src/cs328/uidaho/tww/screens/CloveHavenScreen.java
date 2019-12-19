@@ -17,9 +17,10 @@ import cs328.uidaho.tww.actors.collidables.Collidable;
 import cs328.uidaho.tww.actors.collidables.Door;
 import cs328.uidaho.tww.actors.collidables.Item;
 import cs328.uidaho.tww.actors.collidables.person.Player;
+import cs328.uidaho.tww.actors.collidables.person.npc.ActionPrompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.Blurb;
 import cs328.uidaho.tww.actors.collidables.person.npc.Discussion;
-import cs328.uidaho.tww.actors.collidables.person.npc.LockPrompt;
+import cs328.uidaho.tww.actors.collidables.person.npc.GatedPrompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.NPC;
 import cs328.uidaho.tww.actors.collidables.person.npc.Prompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.PromptHolder;
@@ -110,7 +111,7 @@ public class CloveHavenScreen extends BaseScreen {
 			new Blurb("Oh, okay...", new Blurb("Please come back if you change your mind."))
 		);
 		
-		LockPrompt sodaPrompt = (new LockPrompt("Could you bring me a soda?", "cola")).addUnlockedResponse(
+		GatedPrompt sodaPrompt = (new GatedPrompt("Could you bring me a soda?", "cola")).addUnlockedResponse(
 			"Here you go!",
 			new Blurb("Thank you! Have a key!")
 		).addLockedResponse(
@@ -170,7 +171,8 @@ public class CloveHavenScreen extends BaseScreen {
 								!((InputEvent)e).getType().equals(Type.touchDown))
 							{ return false; }
 							
-							if (LockPrompt.class.isInstance(prompt)) ((LockPrompt)prompt).unlockAction(player);
+							if (GatedPrompt.class.isInstance(prompt)) ((GatedPrompt)prompt).unlockAction(player);
+							else if (ActionPrompt.class.isInstance(prompt)) ((ActionPrompt)prompt).activateAction(player);
 							promptHolder.setPrompt(fp);
 							
 							return false;

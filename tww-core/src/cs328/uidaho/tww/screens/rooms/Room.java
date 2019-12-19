@@ -14,7 +14,8 @@ import cs328.uidaho.tww.actors.collidables.Collidable;
 import cs328.uidaho.tww.actors.collidables.Door;
 import cs328.uidaho.tww.actors.collidables.Item;
 import cs328.uidaho.tww.actors.collidables.person.Player;
-import cs328.uidaho.tww.actors.collidables.person.npc.LockPrompt;
+import cs328.uidaho.tww.actors.collidables.person.npc.ActionPrompt;
+import cs328.uidaho.tww.actors.collidables.person.npc.GatedPrompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.NPC;
 import cs328.uidaho.tww.actors.collidables.person.npc.Prompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.PromptHolder;
@@ -71,7 +72,8 @@ if (player.isInteracting()) {
 								!((InputEvent)e).getType().equals(Type.touchDown))
 							{ return false; }
 							
-							if (LockPrompt.class.isInstance(prompt)) ((LockPrompt)prompt).unlockAction(player);
+							if (GatedPrompt.class.isInstance(prompt)) ((GatedPrompt)prompt).unlockAction(player);
+							else if (ActionPrompt.class.isInstance(prompt)) ((ActionPrompt)prompt).activateAction(player);
 							promptHolder.setPrompt(fp);
 							
 							return false;
