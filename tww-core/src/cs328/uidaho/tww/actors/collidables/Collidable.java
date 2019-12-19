@@ -1,4 +1,4 @@
-package cs328.uidaho.tww.actors;
+package cs328.uidaho.tww.actors.collidables;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import cs328.uidaho.tww.GameMetaData;
+import cs328.uidaho.tww.actors.BaseActor;
 
 public class Collidable extends BaseActor {
 	

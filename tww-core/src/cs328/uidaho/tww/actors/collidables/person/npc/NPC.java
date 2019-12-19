@@ -1,11 +1,11 @@
-package cs328.uidaho.tww.actors.person.npc;
+package cs328.uidaho.tww.actors.collidables.person.npc;
 
 import java.util.Random;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cs328.uidaho.tww.actors.person.Person;
-import cs328.uidaho.tww.actors.person.player.Player;
+import cs328.uidaho.tww.actors.collidables.person.Person;
+import cs328.uidaho.tww.actors.collidables.person.Player;
 import cs328.uidaho.tww.actors.util.IInteractable;
 
 public class NPC extends Person implements IInteractable {

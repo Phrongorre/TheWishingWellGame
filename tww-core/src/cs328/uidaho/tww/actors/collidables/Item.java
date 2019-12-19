@@ -1,11 +1,11 @@
-package cs328.uidaho.tww.actors.person.player;
+package cs328.uidaho.tww.actors.collidables;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cs328.uidaho.tww.GameMetaData;
-import cs328.uidaho.tww.actors.Collidable;
+import cs328.uidaho.tww.actors.collidables.person.Player;
 import cs328.uidaho.tww.actors.util.IInteractable;
 
 public class Item extends Collidable implements IInteractable {

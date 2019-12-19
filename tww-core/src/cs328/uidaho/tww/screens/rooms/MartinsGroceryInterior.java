@@ -1,7 +1,7 @@
 package cs328.uidaho.tww.screens.rooms;
 
 import cs328.uidaho.tww.actors.BaseActor;
-import cs328.uidaho.tww.actors.person.player.Item;
+import cs328.uidaho.tww.actors.collidables.Item;
 import cs328.uidaho.tww.screens.CloveHavenScreen;
 
 public class MartinsGroceryInterior extends Room {

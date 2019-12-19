@@ -1,10 +1,10 @@
-package cs328.uidaho.tww.actors;
+package cs328.uidaho.tww.actors.collidables;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.GameMetaData;
-import cs328.uidaho.tww.actors.person.player.Player;
+import cs328.uidaho.tww.actors.collidables.person.Player;
 import cs328.uidaho.tww.actors.util.IInteractable;
 import cs328.uidaho.tww.screens.BaseScreen;
 

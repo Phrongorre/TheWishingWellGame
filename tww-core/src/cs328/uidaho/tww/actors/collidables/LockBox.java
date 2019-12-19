@@ -1,12 +1,11 @@
-package cs328.uidaho.tww.actors;
+package cs328.uidaho.tww.actors.collidables;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
-import cs328.uidaho.tww.actors.person.player.Inventory;
-import cs328.uidaho.tww.actors.person.player.Item;
 import cs328.uidaho.tww.actors.scenes.Scene;
 import cs328.uidaho.tww.actors.scenes.SceneSegment;
+import cs328.uidaho.tww.gui.Inventory;
 
 public class LockBox extends Collidable {
 	

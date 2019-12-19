@@ -1,10 +1,11 @@
-package cs328.uidaho.tww.actors.person.player;
+package cs328.uidaho.tww.gui;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import cs328.uidaho.tww.actors.BaseActor;
+import cs328.uidaho.tww.actors.collidables.Item;
 
 public class Inventory extends BaseActor {
 	

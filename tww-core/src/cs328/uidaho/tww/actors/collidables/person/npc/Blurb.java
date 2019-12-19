@@ -1,4 +1,4 @@
-package cs328.uidaho.tww.actors.person.npc;
+package cs328.uidaho.tww.actors.collidables.person.npc;
 
 public class Blurb extends Prompt {
 	

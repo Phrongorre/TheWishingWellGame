@@ -1,4 +1,4 @@
-package cs328.uidaho.tww.actors;
+package cs328.uidaho.tww.actors.collidables;
 
 import java.util.Random;
 

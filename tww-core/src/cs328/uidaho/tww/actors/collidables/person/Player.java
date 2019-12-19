@@ -1,4 +1,4 @@
-package cs328.uidaho.tww.actors.person.player;
+package cs328.uidaho.tww.actors.collidables.person;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cs328.uidaho.tww.GameMetaData;
-import cs328.uidaho.tww.actors.person.Person;
 import cs328.uidaho.tww.actors.util.IInteractable;
+import cs328.uidaho.tww.gui.Inventory;
 
 public class Player extends Person {
 	

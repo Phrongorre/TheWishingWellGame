@@ -1,10 +1,10 @@
-package cs328.uidaho.tww.actors.person;
+package cs328.uidaho.tww.actors.collidables.person;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cs328.uidaho.tww.actors.Collidable;
+import cs328.uidaho.tww.actors.collidables.Collidable;
 
 public class Person extends Collidable {
 	

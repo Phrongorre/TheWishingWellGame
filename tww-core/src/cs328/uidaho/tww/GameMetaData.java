@@ -3,8 +3,8 @@ package cs328.uidaho.tww;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
-import cs328.uidaho.tww.actors.person.player.Inventory;
-import cs328.uidaho.tww.actors.person.player.Item;
+import cs328.uidaho.tww.actors.collidables.Item;
+import cs328.uidaho.tww.gui.Inventory;
 import cs328.uidaho.tww.screens.BaseScreen;
 
 public class GameMetaData {

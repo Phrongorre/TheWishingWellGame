@@ -3,14 +3,13 @@ package cs328.uidaho.tww.screens.rooms;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
-import cs328.uidaho.tww.GameMetaData;
 import cs328.uidaho.tww.actors.BaseActor;
-import cs328.uidaho.tww.actors.Collidable;
-import cs328.uidaho.tww.actors.Door;
-import cs328.uidaho.tww.actors.person.npc.NPC;
-import cs328.uidaho.tww.actors.person.npc.PromptHolder;
-import cs328.uidaho.tww.actors.person.player.Item;
-import cs328.uidaho.tww.actors.person.player.Player;
+import cs328.uidaho.tww.actors.collidables.Collidable;
+import cs328.uidaho.tww.actors.collidables.Door;
+import cs328.uidaho.tww.actors.collidables.Item;
+import cs328.uidaho.tww.actors.collidables.person.Player;
+import cs328.uidaho.tww.actors.collidables.person.npc.NPC;
+import cs328.uidaho.tww.actors.collidables.person.npc.PromptHolder;
 import cs328.uidaho.tww.gui.DialogueBox;
 import cs328.uidaho.tww.screens.BaseScreen;
 
