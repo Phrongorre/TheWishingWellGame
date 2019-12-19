@@ -13,12 +13,25 @@ public class GameMetaData {
 	private static float spawnY;
 	private static Inventory inventory;
 	private static Array<BaseScreen> gameScreens;
+	private static boolean wireframesVisible;
+	private static boolean debugMode = false;
 	
 	public static void initialize() {
 		GameMetaData.spawnX = 0f;
 		GameMetaData.spawnY = 0f;
 		GameMetaData.inventory = null;
 		GameMetaData.gameScreens = new Array<BaseScreen>();
+		GameMetaData.wireframesVisible = false;
+		
+		if (GameMetaData.debugMode) GameMetaData.showWireframes();
+	}
+	
+	public static void setDebugMode(boolean state) {
+		GameMetaData.debugMode = state;
+	}
+	
+	public static boolean debugMode() {
+		return GameMetaData.debugMode;
 	}
 	
 	public static void setSpawnLocation(float x, float y) {
@@ -81,6 +94,18 @@ public class GameMetaData {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static void showWireframes() {
+		GameMetaData.wireframesVisible = true;
+	}
+	
+	public static void hideWireframes() {
+		GameMetaData.wireframesVisible = false;
+	}
+	
+	public static boolean wireframesVisible() {
+		return GameMetaData.wireframesVisible;
 	}
 	
 }

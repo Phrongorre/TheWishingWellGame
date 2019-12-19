@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import cs328.uidaho.tww.GameMetaData;
 import cs328.uidaho.tww.actors.Collidable;
 import cs328.uidaho.tww.actors.util.IInteractable;
 
@@ -30,6 +31,7 @@ public class Item extends Collidable implements IInteractable {
 		this.setAnimation(this.worldAnimation);
 		
 		this.interactable = true;
+		this.setPhysicalCollisions(false);
 	}
 	
 	public Item(Item other) {
@@ -48,8 +50,10 @@ public class Item extends Collidable implements IInteractable {
 	
 	@Override
 	public void interact(Player interactingPlayer) {
-		System.out.print(this.id);
-		System.out.println(": " + this.name);
+		if (GameMetaData.debugMode()) {
+			System.out.print(this.id);
+			System.out.println(": " + this.name);
+		}
 		this.setAnimation(this.inventoryAnimation);
 		interactingPlayer.getInventory().addItem(this);
 	}

@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
+import cs328.uidaho.tww.GameMetaData;
+
 public class Collidable extends BaseActor {
 	
 	public static final int COLLISION_SQUARE = 0;
@@ -22,7 +24,6 @@ public class Collidable extends BaseActor {
 	
 	protected Polygon boundaryPolygon;
 	protected Array<TextureRegion> collisionWireframes;
-	protected boolean wireframesVisible;
 	
 	protected float collisionWidth;
 	protected float collisionHeight;
@@ -30,6 +31,8 @@ public class Collidable extends BaseActor {
 	protected float collisionY;
 	protected float collisionXshear;
 	protected int   collisionShape;
+	
+	protected boolean physicalCollision;
 	
 	public Collidable(float x, float y, Stage s) {
 		super(x, y, s);
@@ -43,8 +46,6 @@ public class Collidable extends BaseActor {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		this.collisionWireframes.add(new TextureRegion(texture));
 		
-		this.wireframesVisible = false;
-		
 		this.collisionWidth  = 0f;
 		this.collisionHeight = 0f;
 		this.collisionX      = 0f;
@@ -52,6 +53,8 @@ public class Collidable extends BaseActor {
 		this.collisionXshear = 0f;
 		
 		this.collisionShape = COLLISION_ROUND;
+		
+		this.physicalCollision = true;
 	}
 	
 	public Collidable(float x, float y, String textureFileName, Stage s) {
@@ -72,6 +75,14 @@ public class Collidable extends BaseActor {
 	}
 	
 	/*** Collisions methods ***/
+	
+	public void setPhysicalCollisions(boolean state) {
+		this.physicalCollision = state;
+	}
+	
+	public boolean hasPhysicalCollisions() {
+		return this.physicalCollision;
+	}
 	
 	public void setBoundaryRectangle() {
 		this.setBoundaryRectangle(this.getWidth(), this.getHeight());
@@ -144,27 +155,26 @@ public class Collidable extends BaseActor {
 	}
 	
 	public Vector2 preventOverlap(Collidable other) {
-		Polygon poly1 = this.getBoundaryPolygon();
-		Polygon poly2 = other.getBoundaryPolygon();
-		
-		//initial test to improve performance
-		if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle())) {
-			return null;
+		if (this.hasPhysicalCollisions() && other.hasPhysicalCollisions()) {
+			Polygon poly1 = this.getBoundaryPolygon();
+			Polygon poly2 = other.getBoundaryPolygon();
+			
+			//initial test to improve performance
+			if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle())) {
+				return null;
+			}
+			
+			MinimumTranslationVector mtv = new MinimumTranslationVector();
+			boolean polygonOverlap = Intersector.overlapConvexPolygons(poly1, poly2, mtv);
+			
+			if (!polygonOverlap) {
+				return null;
+			}
+			
+			this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
+			return mtv.normal;
 		}
-		
-		MinimumTranslationVector mtv = new MinimumTranslationVector();
-		boolean polygonOverlap = Intersector.overlapConvexPolygons(poly1, poly2, mtv);
-		
-		if (!polygonOverlap) {
-			return null;
-		}
-		
-		this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
-		return mtv.normal;
-	}
-	
-	public void setWireframesVisible(boolean visible) {
-		this.wireframesVisible = visible;
+		return Vector2.Zero;
 	}
 	
 	public void setCollisionShape(int shape) {
@@ -203,7 +213,7 @@ public class Collidable extends BaseActor {
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 		
-		if (this.boundaryPolygon != null && this.wireframesVisible) {
+		if (this.boundaryPolygon != null && GameMetaData.wireframesVisible()) {
 			Polygon bpoly = this.getBoundaryPolygon();
 			Affine2 affine = new Affine2();
 			switch (this.collisionShape) {

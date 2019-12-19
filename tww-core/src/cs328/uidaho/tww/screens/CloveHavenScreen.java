@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 
 import cs328.uidaho.tww.BaseGame;
+import cs328.uidaho.tww.GameMetaData;
 import cs328.uidaho.tww.actors.BaseActor;
 import cs328.uidaho.tww.actors.Building;
 import cs328.uidaho.tww.actors.Car;
@@ -18,6 +19,7 @@ import cs328.uidaho.tww.actors.person.npc.Blurb;
 import cs328.uidaho.tww.actors.person.npc.Discussion;
 import cs328.uidaho.tww.actors.person.npc.NPC;
 import cs328.uidaho.tww.actors.person.npc.Prompt;
+import cs328.uidaho.tww.actors.person.npc.PromptHolder;
 import cs328.uidaho.tww.actors.person.npc.Response;
 import cs328.uidaho.tww.actors.person.player.Item;
 import cs328.uidaho.tww.actors.person.player.Player;
@@ -31,8 +33,7 @@ public class CloveHavenScreen extends BaseScreen {
 
 	Player player;
 	DialogueBox dialogueBox;
-	boolean showWireframes = false;
-	boolean interacting;
+	final PromptHolder promptHolder = new PromptHolder();
 	
 	@Override
 	public void initialize() {
@@ -127,8 +128,7 @@ public class CloveHavenScreen extends BaseScreen {
 		new Car(2, "locations/clove_haven/car_red.png",   this.mainStage);
 		new Car(5, "locations/clove_haven/car_white.png", this.mainStage);
 	}
-
-	final PromptHolder promptHolder = new PromptHolder();
+	
 	@Override
 	public void update(float dt) {
 		if (player.isInteracting()) {
@@ -174,8 +174,6 @@ public class CloveHavenScreen extends BaseScreen {
 					player.preventOverlap(collidable);
 					player.adjustZIndex(collidable);				
 				}
-				
-				if (showWireframes) collidable.setWireframesVisible(true);
 			}
 			
 			for (BaseActor doorActor : BaseActor.getList(mainStage, Door.class.getName())) {
@@ -209,34 +207,6 @@ public class CloveHavenScreen extends BaseScreen {
 			}
 			
 		}
-	}
-	
-	private class PromptHolder {
-		
-		private Prompt prompt;
-		private boolean changed;
-		
-		public PromptHolder() {
-			this.prompt = null;
-			this.changed = false;
-		}
-		
-		public void setPrompt(Prompt prompt) {
-			if (this.prompt != prompt) {
-				this.prompt = prompt;
-				this.changed = true;
-			}
-		}
-		
-		public Prompt prompt() {
-			this.changed = false;
-			return this.prompt;
-		}
-		
-		public boolean hasChanged() {
-			return this.changed;
-		}
-		
 	}
 
 }

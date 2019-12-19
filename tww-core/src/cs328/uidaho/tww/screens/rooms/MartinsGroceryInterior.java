@@ -1,6 +1,7 @@
 package cs328.uidaho.tww.screens.rooms;
 
 import cs328.uidaho.tww.actors.BaseActor;
+import cs328.uidaho.tww.actors.person.player.Item;
 import cs328.uidaho.tww.screens.CloveHavenScreen;
 
 public class MartinsGroceryInterior extends Room {
@@ -17,8 +18,7 @@ public class MartinsGroceryInterior extends Room {
 		this.exitDoor.setSpawnLocation(453f, 60f);
 		this.exitDoor.setTargetScreen(CloveHavenScreen.class);
 		
-		//this.player.setWireframesVisible(true);
-		//this.exitDoor.setWireframesVisible(true);
+		new Item("cola", 30f, 25f, this.mainStage);
 	}
 
 	@Override

@@ -66,7 +66,7 @@ public class Player extends Person {
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 		
-		if (this.interactionPolygon != null && this.wireframesVisible) {
+		if (this.interactionPolygon != null && GameMetaData.wireframesVisible()) {
 			Polygon ipoly = this.getInteractionPolygon();
 			batch.draw(
 				this.collisionWireframes.get(1),

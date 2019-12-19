@@ -26,6 +26,8 @@ public class Door extends Collidable implements IInteractable {
 		this.screenClass = targetScreenClass;
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
+		
+		this.setPhysicalCollisions(false);
 	}
 	
 	public Door(float x, float y, Stage s) { this(x, y, 0f, 0f, null, s); }
