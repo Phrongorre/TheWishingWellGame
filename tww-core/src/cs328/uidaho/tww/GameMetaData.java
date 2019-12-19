@@ -57,10 +57,14 @@ public class GameMetaData {
 		}
 	}
 	
+	//Attempt to get registered instance of screenClass
+	//If instance is not registered, register a new instance and return that
 	public static BaseScreen getScreen(Class<? extends BaseScreen> screenClass) {
 		for (int s=0; s < GameMetaData.gameScreens.size; s++) {
 			try {
-				if (screenClass.isInstance(GameMetaData.gameScreens.get(s))) return screenClass.cast(GameMetaData.gameScreens.get(s));
+				if (screenClass.isInstance(GameMetaData.gameScreens.get(s))) {
+					return screenClass.cast(GameMetaData.gameScreens.get(s));
+				}
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -72,7 +76,6 @@ public class GameMetaData {
 			BaseScreen screenInstance = screenClass.newInstance();
 			GameMetaData.registerScreen(screenClass.cast(screenInstance));
 			return screenClass.cast(screenInstance);
-			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

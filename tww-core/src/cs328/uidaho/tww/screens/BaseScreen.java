@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import cs328.uidaho.tww.GameMetaData;
-
 public abstract class BaseScreen implements Screen, InputProcessor {
 	
 	protected Stage mainStage;

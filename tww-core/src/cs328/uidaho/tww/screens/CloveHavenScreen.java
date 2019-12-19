@@ -99,7 +99,7 @@ public class CloveHavenScreen extends BaseScreen {
 		);
 		
 		//Initialize NPCs
-		(new NPC(105f, 60f, "people/person_lwm0.png", this.mainStage)).addPrompt(
+		(new NPC(105f, 60f, this.mainStage)).addPrompt(
 			new Blurb("'Sup?")
 		);
 		
@@ -121,7 +121,7 @@ public class CloveHavenScreen extends BaseScreen {
 			).addResponse(busy)
 		);
 		
-		(new NPC(120f, 57f, "people/person_adm0.png", this.mainStage)).setDiscussion(disc);
+		(new NPC(120f, 57f, this.mainStage)).setDiscussion(disc);
 		
 		new Car(1, "locations/clove_haven/car_black.png", this.mainStage);
 		new Car(2, "locations/clove_haven/car_red.png",   this.mainStage);
