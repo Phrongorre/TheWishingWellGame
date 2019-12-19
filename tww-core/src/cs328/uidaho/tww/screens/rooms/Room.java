@@ -10,6 +10,7 @@ import cs328.uidaho.tww.actors.collidables.Item;
 import cs328.uidaho.tww.actors.collidables.person.Player;
 import cs328.uidaho.tww.actors.collidables.person.npc.NPC;
 import cs328.uidaho.tww.actors.collidables.person.npc.PromptHolder;
+import cs328.uidaho.tww.actors.util.IInteractable;
 import cs328.uidaho.tww.gui.DialogueBox;
 import cs328.uidaho.tww.screens.BaseScreen;
 
@@ -66,6 +67,15 @@ public abstract class Room extends BaseScreen {
 				dialogueBox.setVisible(true);
 				player.setInteracting(true);
 				promptHolder.setPrompt(npc.getNextPrompt());
+				return;
+			}
+		}
+		
+		for (BaseActor interactor : BaseActor.getList(this.mainStage, IInteractable.class.getName())) {
+			IInteractable interactable = (IInteractable)interactor;
+			
+			if (player.interactsWith(interactable) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				interactable.interact(player);
 				return;
 			}
 		}

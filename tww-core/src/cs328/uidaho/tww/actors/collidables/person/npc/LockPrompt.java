@@ -96,8 +96,10 @@ public class LockPrompt extends Prompt {
 	public void unlockAction(Actor a) {
 		if (GameMetaData.getInventory().contains(this.unlockItemName)) {
 			GameMetaData.getInventory().removeItem(this.unlockItemName);
-			a.clearActions();
-			a.addAction(this.unlockAction);
+			if (this.unlockAction != null) {
+				a.clearActions();
+				a.addAction(this.unlockAction);
+			}
 		}
 	}
 
