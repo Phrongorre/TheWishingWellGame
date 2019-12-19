@@ -102,14 +102,12 @@ public class CloveHavenScreen extends BaseScreen {
 		);
 		
 		//Initialize NPCs
-		(new NPC(105f, 60f, this.mainStage)).addPrompt(
-			new Blurb("'Sup?")
-		);
+		(new NPC(90f, 60f, this.mainStage)).setInteractable(false);
 		
 		Discussion disc = new Discussion();
 		Response busy = new Response(
 			"Not now, I'm busy.",
-			new Blurb("Oh, okay...", new Blurb("Bye"))
+			new Blurb("Oh, okay...", new Blurb("Please come back if you change your mind."))
 		);
 		
 		LockPrompt sodaPrompt = (new LockPrompt("Could you bring me a soda?", "cola")).addUnlockedResponse(
@@ -117,7 +115,13 @@ public class CloveHavenScreen extends BaseScreen {
 			new Blurb("Thank you! Have a key!")
 		).addLockedResponse(
 			"Sure thing!",
-			new Blurb("Great, thanks!")
+			(new Prompt("Great, thanks!")).addResponse(
+				"Do you know where I could find some?",
+				new Blurb("They're usually in vending machines.", new Blurb("Martin's Grocery is probably your best bet."))
+			).addResponse(
+				"Take care.",
+				new Blurb("Please hurry back, I'm so thirsty...")
+			)
 		).addLockedResponse(busy);
 		
 		sodaPrompt.setUnlockAction(Actions.run(
@@ -127,14 +131,14 @@ public class CloveHavenScreen extends BaseScreen {
 			}
 		));
 		
-		disc.addPrompt(
-			(new Prompt("Hey, do you think you could help me?")).addResponse(
+		disc.addPrompt(new Blurb("Hey, do you think you could help me?", 
+			(new Prompt("There's a reward in it for you...")).addResponse(
 				"Sure, what's up?",
-				new Blurb("Great!", sodaPrompt)
+				new Blurb("I'm parched, but also broke.", sodaPrompt)
 			).addResponse(busy)
-		);
+		));
 		
-		(new NPC(120f, 57f, this.mainStage)).setDiscussion(disc);
+		(new NPC(105f, 57f, this.mainStage)).setDiscussion(disc);
 		
 		new Car(1, "locations/clove_haven/car_black.png", this.mainStage);
 		new Car(2, "locations/clove_haven/car_red.png",   this.mainStage);
