@@ -56,7 +56,7 @@ public class LockBox extends Collidable {
 		boolean match;
 		for (Item key : keys.items) {
 			match = false;
-			for (Item item : inventory.items()) {
+			for (Item item : inventory.contents()) {
 				if (item.equals(key)) {
 					match = true;
 					break;

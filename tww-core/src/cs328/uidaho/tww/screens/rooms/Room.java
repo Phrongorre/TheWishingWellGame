@@ -35,7 +35,7 @@ public abstract class Room extends BaseScreen {
 	}
 	
 	protected void loadPlayer() {
-		this.player = new Player(this.mainStage);
+		this.player = new Player(this.mainStage, this.uiStage);
 	}
 
 }

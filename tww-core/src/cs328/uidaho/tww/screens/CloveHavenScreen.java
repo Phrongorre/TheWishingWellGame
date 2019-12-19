@@ -83,7 +83,7 @@ public class CloveHavenScreen extends BaseScreen {
 		
 		new Item("key", 400f, 80f, this.mainStage);
 		
-		player = new Player(this.mainStage);
+		player = new Player(this.mainStage, this.uiStage);
 		BaseActor.setWorldBounds(
 			ground.getWidth(),
 			ground.getHeight() + player.getHeight() - player.getCollisionHeight()/2f

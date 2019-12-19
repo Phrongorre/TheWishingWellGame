@@ -15,10 +15,10 @@ import cs328.uidaho.tww.actors.util.IInteractable;
 public class Player extends Person {
 	
 	private Polygon interactionPolygon;
-	private Inventory inventory;
 	private boolean interacting;
+	private Inventory inventory;
 	
-	public Player(Stage s) {
+	public Player(Stage s, Stage uiStage) {
 		super(GameMetaData.getSpawnX(), GameMetaData.getSpawnY(), s);
 		
 		this.setMaxSpeed(80f);
@@ -29,7 +29,13 @@ public class Player extends Person {
 		
 		this.setInteractionPolygon(8);
 		
-		this.inventory = new Inventory();
+		if (GameMetaData.getInventory() == null) {
+			GameMetaData.setInventory(new Inventory(uiStage));
+		}
+		else {
+			GameMetaData.setInventoryStage(uiStage);
+		}
+		this.inventory = GameMetaData.getInventory();
 		this.interacting = false;
 	}
 	
@@ -131,7 +137,7 @@ public class Player extends Person {
 		
 		return Intersector.overlapConvexPolygons(poly1, poly2);
 	}
-
+	
 	public Inventory getInventory() {
 		return this.inventory;
 	}
