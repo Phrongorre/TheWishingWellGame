@@ -41,12 +41,12 @@ public class Building extends Collidable {
 	
 	public void open() {
 		this.setAnimation(this.openAnimation);
-		this.entranceDoor.setInteractable(true);
+		this.entranceDoor.setLocked(false);
 	}
 	
 	public void close() {
 		this.setAnimation(this.closedAnimation);
-		this.entranceDoor.setInteractable(false);
+		this.entranceDoor.lockWithKey("key");
 	}
 	
 }

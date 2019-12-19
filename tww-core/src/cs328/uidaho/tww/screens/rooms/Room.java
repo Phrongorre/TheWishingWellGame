@@ -53,7 +53,7 @@ public abstract class Room extends BaseScreen {
 		for (BaseActor itemActor : BaseActor.getList(this.mainStage, Item.class.getName())) {
 			Item item = (Item)itemActor;
 			
-			if (player.interactsWith(item) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			if (player.interactsWith(item) && item.isInteractable() && Gdx.input.isKeyJustPressed(Keys.E)) {
 				item.interact(player);
 				return; //Don't interact with anything else
 			}
@@ -62,7 +62,7 @@ public abstract class Room extends BaseScreen {
 		for (BaseActor npcActor : BaseActor.getList(this.mainStage, NPC.class.getName())) {
 			NPC npc = (NPC)npcActor;
 			
-			if (player.interactsWith(npc) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			if (player.interactsWith(npc) && npc.isInteractable() && Gdx.input.isKeyJustPressed(Keys.E)) {
 				npc.interact(player);
 				dialogueBox.setVisible(true);
 				player.setInteracting(true);
@@ -74,7 +74,7 @@ public abstract class Room extends BaseScreen {
 		for (BaseActor interactor : BaseActor.getList(this.mainStage, IInteractable.class.getName())) {
 			IInteractable interactable = (IInteractable)interactor;
 			
-			if (player.interactsWith(interactable) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			if (player.interactsWith(interactable) && interactable.isInteractable() && Gdx.input.isKeyJustPressed(Keys.E)) {
 				interactable.interact(player);
 				return;
 			}

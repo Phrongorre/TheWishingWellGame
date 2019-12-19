@@ -19,7 +19,7 @@ public class MartinsGroceryInterior extends Room {
 		this.exitDoor.setSpawnLocation(453f, 60f);
 		this.exitDoor.setTargetScreen(CloveHavenScreen.class);
 		
-		LockBox vendingMachine = new LockBox(20f, 40f, "locations/clove_haven/bench.png", this.mainStage);
+		LockBox vendingMachine = new LockBox(20f, 40f, "locations/clove_haven/vending_machine.png", this.mainStage);
 		vendingMachine.addReward(new Item("cola", 0f, 0f, this.mainStage));
 		vendingMachine.addKey("coin");
 	}

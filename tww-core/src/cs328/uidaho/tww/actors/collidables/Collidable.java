@@ -118,6 +118,7 @@ public class Collidable extends BaseActor {
 	}
 	
 	public Polygon getBoundaryPolygon() {
+		if (this.boundaryPolygon == null) return null;
 		this.boundaryPolygon.setPosition(
 			this.getX()+this.collisionX+(this.getWidth()-this.collisionWidth)/2f,
 			this.getY()+this.collisionY-(this.collisionHeight)/2f

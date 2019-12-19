@@ -26,6 +26,22 @@ public class LockBox extends Collidable implements IInteractable {
 		this.consumesKeys = true;
 	}
 	
+	public LockBox(Stage s) {
+		super(0f, 0f, s);
+		
+		this.setCollisionSize(10f, 10f);
+		
+		this.keyItemNames = new Array<String>();
+		this.rewards = new Array<Item>();
+		this.unlockAction = null;
+		this.interactable = true;
+		this.consumesKeys = true;
+	}
+	
+	public void setConsumesKeys(boolean state) {
+		this.consumesKeys = state;
+	}
+	
 	public LockBox clearKeys() {
 		this.keyItemNames.clear();
 		return this;

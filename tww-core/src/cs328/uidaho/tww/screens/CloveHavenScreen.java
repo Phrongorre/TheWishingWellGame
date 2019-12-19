@@ -24,6 +24,7 @@ import cs328.uidaho.tww.actors.collidables.person.npc.NPC;
 import cs328.uidaho.tww.actors.collidables.person.npc.Prompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.PromptHolder;
 import cs328.uidaho.tww.actors.collidables.person.npc.Response;
+import cs328.uidaho.tww.actors.util.IInteractable;
 import cs328.uidaho.tww.gui.DialogueBox;
 import cs328.uidaho.tww.screens.rooms.BooksShopInterior;
 import cs328.uidaho.tww.screens.rooms.BrickhausCafeInterior;
@@ -71,13 +72,13 @@ public class CloveHavenScreen extends BaseScreen {
 			340f, 63f, 163f,  5f, BrickhausCafeInterior.class, //Door info
 			"clove_haven/brickhaus_cafe", this.mainStage
 		);
-		new Building(
+		(new Building(
 			200f, 63f, //Location
 			 45f, 12f, //Size
 			  4f,  0f, //Offsets
 			220f, 63f,  55f,  5f, BooksShopInterior.class, //Door info
 			"clove_haven/books_shop", this.mainStage
-		);
+		)).close();
 		new Building(
 			 80f, 63f, //Location
 			 90f, 16f, //Size
@@ -200,7 +201,7 @@ public class CloveHavenScreen extends BaseScreen {
 			for (BaseActor itemActor : BaseActor.getList(this.mainStage, Item.class.getName())) {
 				Item item = (Item)itemActor;
 				
-				if (player.interactsWith(item) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if (player.interactsWith(item) && item.isInteractable() && Gdx.input.isKeyJustPressed(Keys.E)) {
 					item.interact(player);
 					return; //Don't interact with anything else
 				}
@@ -209,11 +210,20 @@ public class CloveHavenScreen extends BaseScreen {
 			for (BaseActor npcActor : BaseActor.getList(this.mainStage, NPC.class.getName())) {
 				NPC npc = (NPC)npcActor;
 				
-				if (player.interactsWith(npc) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if (player.interactsWith(npc) && npc.isInteractable() && Gdx.input.isKeyJustPressed(Keys.E)) {
 					npc.interact(player);
 					dialogueBox.setVisible(true);
 					player.setInteracting(true);
 					promptHolder.setPrompt(npc.getNextPrompt());
+					return;
+				}
+			}
+			
+			for (BaseActor interactor : BaseActor.getList(this.mainStage, IInteractable.class.getName())) {
+				IInteractable interactable = (IInteractable)interactor;
+				
+				if (player.interactsWith(interactable) && interactable.isInteractable() && Gdx.input.isKeyJustPressed(Keys.E)) {
+					interactable.interact(player);
 					return;
 				}
 			}

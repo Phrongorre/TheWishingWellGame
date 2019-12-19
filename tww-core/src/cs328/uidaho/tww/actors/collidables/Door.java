@@ -1,6 +1,7 @@
 package cs328.uidaho.tww.actors.collidables;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.GameMetaData;
@@ -14,6 +15,8 @@ public class Door extends Collidable implements IInteractable {
 	private Class<? extends BaseScreen> screenClass;
 	private float spawnX;
 	private float spawnY;
+	private boolean locked;
+	private LockBox lock;
 	
 	public Door(float x, float y, float spawnX, float spawnY, Class<? extends BaseScreen> targetScreenClass, Stage s) {
 		super(x, y, s);
@@ -26,12 +29,28 @@ public class Door extends Collidable implements IInteractable {
 		this.screenClass = targetScreenClass;
 		this.spawnX = spawnX;
 		this.spawnY = spawnY;
+		this.locked = false;
+		this.lock = new LockBox(this.getStage());
+		this.lock.setVisible(false);
+		this.lock.setPhysicalCollisions(false);
+		this.lock.setConsumesKeys(true);
+		this.lock.setUnlockAction(Actions.run(
+			() -> {
+				this.setLocked(false);
+				this.lock.clearKeys();
+			}
+		));
 		
 		this.setPhysicalCollisions(false);
 	}
 	
 	public Door(float x, float y, Stage s) { this(x, y, 0f, 0f, null, s); }
-
+	
+	public void lockWithKey(String keyItemName) {
+		this.setLocked(true);
+		this.lock.addKey(keyItemName);
+	}
+	
 	@Override
 	public void setInteractable(boolean interactable) {
 		this.interactable = interactable;
@@ -40,6 +59,11 @@ public class Door extends Collidable implements IInteractable {
 	@Override
 	public boolean isInteractable() {
 		return this.interactable;
+	}
+	
+	public void setLocked(boolean state) {
+		this.locked = state;
+		this.lock.clearKeys();
 	}
 	
 	public void setSpawnLocation(float x, float y) {
@@ -53,15 +77,17 @@ public class Door extends Collidable implements IInteractable {
 
 	@Override
 	public void interact(Player interactingPlayer) {
-		if (this.screenClass != null) {
-			try {
-				GameMetaData.setSpawnLocation(this.spawnX, this.spawnY);
-				BaseScreen screen = GameMetaData.getScreen(this.screenClass);
-				GameMetaData.setInventoryStage(screen.getUiStage());
-				BaseGame.setActiveScreen(screen);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
+		if (!this.locked || this.lock.attemptRewards(interactingPlayer.getInventory()) != null) {
+			if (this.screenClass != null) {
+				try {
+					GameMetaData.setSpawnLocation(this.spawnX, this.spawnY);
+					BaseScreen screen = GameMetaData.getScreen(this.screenClass);
+					GameMetaData.setInventoryStage(screen.getUiStage());
+					BaseGame.setActiveScreen(screen);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
