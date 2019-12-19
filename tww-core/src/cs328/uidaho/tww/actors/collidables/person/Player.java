@@ -41,6 +41,8 @@ public class Player extends Person {
 	
 	@Override
 	public void act(float dt) {
+		super.act(dt);
+		
 		if (!this.interacting) {
 			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 				this.accelerateAtAngle(180f);

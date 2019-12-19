@@ -13,13 +13,7 @@ public class Blurb extends Prompt {
 	}
 	
 	public void setFollowPrompt(Prompt follow) {
-		this.setFollowPrompt(0, follow);
-	}
-	
-	@Override
-	public void setFollowPrompt(int index, Prompt follow) {
-		if (index == 0) this.setFollowPrompt(follow);
-		return;
+		this.responses().get(0).setFollowPrompt(follow);
 	}
 	
 	@Override

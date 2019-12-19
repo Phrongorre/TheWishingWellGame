@@ -4,8 +4,8 @@ import com.badlogic.gdx.utils.Array;
 
 public class Prompt {
 	
-	private String prompt;
-	private Array<Response> responses;
+	protected String prompt;
+	protected Array<Response> responses;
 	
 	public Prompt(String prompt) {
 		this.prompt = prompt;
@@ -15,14 +15,6 @@ public class Prompt {
 	public Prompt(String prompt, Response response) {
 		this(prompt);
 		this.responses.add(response);
-	}
-	
-	public void copy(Prompt other) {
-		this.prompt = other.prompt;
-		this.responses.clear();
-		for (Response response : other.responses) {
-			this.responses.add(response);
-		}
 	}
 	
 	public Prompt setPrompt(String prompt) {
@@ -44,24 +36,15 @@ public class Prompt {
 		return this;
 	}
 	
-	public String response(int index) {
-		Response response = this.responses.get(index);
-		if (response != null) return response.response;
-		return null;
+	public Array<Response> responses() {
+		return this.responses;
 	}
 	
-	public Response[] responses() {
-		return this.responses();
-	}
-	
-	public Prompt[] followPrompts() {
-		Prompt[] prompts = new Prompt[this.responses.size];
-		for (int r = 0; r < this.responses.size; r++) {
-			if (this.responses.get(r) != null) {
-				prompts[r] = this.responses.get(r).follow;
-			}
-			else {
-				prompts[r] = null;
+	public Array<Prompt> followPrompts() {
+		Array<Prompt> prompts = new Array<Prompt>();
+		for (Response response : this.responses) {
+			if (response != null) {
+				prompts.add(response.follow());
 			}
 		}
 		return prompts;
@@ -71,25 +54,10 @@ public class Prompt {
 		String str = this.prompt + "\n";
 		for (Response response : this.responses) {
 			if (response != null) {
-				str += "\n" + response.response;
+				str += "\n" + response.response();
 			}
 		}
 		return str;
-	}
-	
-	public int responseCount() {
-		return this.responses.size;
-	}
-	
-	public void setFollowPrompt(int index, Prompt follow) {
-		Response response = this.responses.get(index);
-		if (response != null) response.follow = follow;
-	}
-	
-	public Prompt followResponse(int index) {
-		Response response = this.responses.get(index);
-		if (response != null) return response.follow;
-		return null;
 	}
 	
 }

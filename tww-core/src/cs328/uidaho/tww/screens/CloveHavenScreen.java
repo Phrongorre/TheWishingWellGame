@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 
@@ -18,6 +19,7 @@ import cs328.uidaho.tww.actors.collidables.Item;
 import cs328.uidaho.tww.actors.collidables.person.Player;
 import cs328.uidaho.tww.actors.collidables.person.npc.Blurb;
 import cs328.uidaho.tww.actors.collidables.person.npc.Discussion;
+import cs328.uidaho.tww.actors.collidables.person.npc.LockPrompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.NPC;
 import cs328.uidaho.tww.actors.collidables.person.npc.Prompt;
 import cs328.uidaho.tww.actors.collidables.person.npc.PromptHolder;
@@ -109,15 +111,25 @@ public class CloveHavenScreen extends BaseScreen {
 			new Blurb("Oh, okay...", new Blurb("Bye"))
 		);
 		
+		LockPrompt sodaPrompt = (new LockPrompt("Could you bring me a soda?", "cola")).addUnlockedResponse(
+			"Here you go!",
+			new Blurb("Thank you! Have a key!")
+		).addLockedResponse(
+			"Sure thing!",
+			new Blurb("Great, thanks!")
+		).addLockedResponse(busy);
+		
+		sodaPrompt.setUnlockAction(Actions.run(
+			() -> {
+				Item key = new Item("key", 0f, 0f, this.mainStage);
+				key.interact(player);
+			}
+		));
+		
 		disc.addPrompt(
 			(new Prompt("Hey, do you think you could help me?")).addResponse(
 				"Sure, what's up?",
-				new Blurb("Great!",
-					(new Prompt("Could you bring me a soda?")).addResponse(
-						"Sure thing!",
-						new Blurb("Great, thanks!")
-					).addResponse(busy)
-				)
+				new Blurb("Great!", sodaPrompt)
 			).addResponse(busy)
 		);
 		
@@ -144,15 +156,16 @@ public class CloveHavenScreen extends BaseScreen {
 				dialogueBox.reset();
 				dialogueBox.setText(prompt.prompt());
 				
-				for (int r=0; r < prompt.responseCount(); r++) {
-					TextButton responseButton = new TextButton(prompt.response(r), BaseGame.textButtonStyle);
-					final Prompt fp = prompt.followResponse(r);
+				for (Response response : prompt.responses()) {
+					TextButton responseButton = new TextButton(response.response(), BaseGame.textButtonStyle);
+					final Prompt fp = response.follow();
 					responseButton.addListener(
 						(Event e) -> {
 							if (!(e instanceof InputEvent) ||
 								!((InputEvent)e).getType().equals(Type.touchDown))
 							{ return false; }
 							
+							if (LockPrompt.class.isInstance(prompt)) ((LockPrompt)prompt).unlockAction(player);
 							promptHolder.setPrompt(fp);
 							
 							return false;

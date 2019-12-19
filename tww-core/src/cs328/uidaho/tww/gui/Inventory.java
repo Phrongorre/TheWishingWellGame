@@ -26,8 +26,8 @@ public class Inventory extends BaseActor {
 		this.setPosition(s.getCamera().viewportWidth, s.getCamera().viewportHeight, Align.topRight);
 	}
 	
-	public boolean addItem(Item item) {
-		if (this.contents.size >= this.maxSize) return false;
+	public Inventory addItem(Item item) {
+		if (this.contents.size >= this.maxSize) return this;
 		
 		item.remove();
 		this.getStage().addActor(item);
@@ -40,16 +40,24 @@ public class Inventory extends BaseActor {
 			Align.topLeft
 		);
 		
-		return true;
+		return this;
+	}
+	
+	public Inventory addItems(Array<Item> items) {
+		for (Item item : items) {
+			this.addItem(item);
+		}
+		return this;
 	}
 	
 	public Item removeItem(String name) {
 		if (this.contents.size == 0) return null;
 		
-		for (Item item : this.contents.items) {
+		for (Item item : this.contents) {
 			if (item.getName() == name) {
 				this.contents.removeValue(item, true);
 				item.remove();
+				this.updateItemLocations();
 				return item;
 			}
 		}
@@ -64,8 +72,26 @@ public class Inventory extends BaseActor {
 		return false;
 	}
 	
+	public boolean contains(String itemName) {
+		for (Item inventoryItem : this.contents) {
+			if (inventoryItem.getName() == itemName) return true;
+		}
+		return false;
+	}
+	
 	public Array<Item> contents() {
 		return this.contents;
+	}
+	
+	private void updateItemLocations() {
+		for (int i=0; i < this.contents.size; i++) {
+			Item item = this.contents.get(i);
+			item.setPosition(
+				(i%this.slotsWide)*this.slotWidth+this.padding+this.getX(Align.topLeft),
+				(i/this.slotsWide)*this.slotHeight-this.padding+this.getY(Align.topLeft),
+				Align.topLeft
+			);
+		}
 	}
 	
 }
