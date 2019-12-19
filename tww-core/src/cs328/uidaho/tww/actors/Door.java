@@ -52,13 +52,13 @@ public class Door extends Collidable implements IInteractable {
 	@Override
 	public void interact(Player interactingPlayer) {
 		if (this.screenClass != null) {
-			try
-			{
+			try {
 				GameMetaData.setSpawnLocation(this.spawnX, this.spawnY);
-				BaseGame.setActiveScreen(this.screenClass.newInstance());
+				BaseScreen screen = GameMetaData.getScreen(this.screenClass);
+				GameMetaData.setInventoryStage(screen.getUiStage());
+				BaseGame.setActiveScreen(screen);
 			}
-			catch (Exception e)
-			{
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

@@ -10,10 +10,10 @@ public class Inventory extends BaseActor {
 	
 	private Array<Item> contents;
 	private int maxSize;
-	private final float slotWidth = 16f;
-	private final float slotHeight = 16f;
+	private final float slotWidth = 48f;
+	private final float slotHeight = 48f;
 	private final int slotsWide = 3;
-	private final float padding = 3f;
+	private final float padding = 9f;
 	
 	public Inventory(Stage s) {
 		super(0f, 0f, s);
@@ -55,7 +55,14 @@ public class Inventory extends BaseActor {
 		
 		return null;
 	}
-
+	
+	public boolean contains(Item item) {
+		for (Item inventoryItem : this.contents) {
+			if (item == inventoryItem) return true;
+		}
+		return false;
+	}
+	
 	public Array<Item> contents() {
 		return this.contents;
 	}

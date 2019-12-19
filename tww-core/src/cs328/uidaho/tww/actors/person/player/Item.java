@@ -62,6 +62,5 @@ public class Item extends Collidable implements IInteractable {
 	@Override
 	public void setInteractable(boolean interactable) {
 		this.interactable = interactable;
-	}
-	
+	}	
 }

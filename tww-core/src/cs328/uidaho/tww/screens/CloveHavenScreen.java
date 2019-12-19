@@ -24,6 +24,7 @@ import cs328.uidaho.tww.actors.person.player.Player;
 import cs328.uidaho.tww.gui.DialogueBox;
 import cs328.uidaho.tww.screens.rooms.BooksShopInterior;
 import cs328.uidaho.tww.screens.rooms.BrickhausCafeInterior;
+import cs328.uidaho.tww.screens.rooms.MartinsGroceryInterior;
 import cs328.uidaho.tww.screens.rooms.QualityDrugInterior;
 
 public class CloveHavenScreen extends BaseScreen {
@@ -55,6 +56,13 @@ public class CloveHavenScreen extends BaseScreen {
 		new Collidable(357f, 67f, "locations/clove_haven/bush.png", this.mainStage);
 		
 		new Building(
+			400f, 63f, //Location
+			200f, 16f, //Size
+			  0f,  0f, //Offsets
+			455f, 63f,  60f,  5f, MartinsGroceryInterior.class, //Door info
+			"clove_haven/martins_grocery", this.mainStage
+		);
+		new Building(
 			255f, 57f, //Location
 			100f, 12f, //Size
 			  3f,  6f, //Offsets
@@ -81,7 +89,8 @@ public class CloveHavenScreen extends BaseScreen {
 		tree.setCollisionSize(tree.getWidth()/2f, tree.getWidth()/4f);
 		tree.setCollisionLocation(0f, 8f);
 		
-		new Item("key", 400f, 80f, this.mainStage);
+		new Item("coin", 10f, 70f, this.mainStage);
+		new Collidable(10f, 70f, "locations/clove_haven/bush.png", this.mainStage);
 		
 		player = new Player(this.mainStage, this.uiStage);
 		BaseActor.setWorldBounds(
@@ -172,7 +181,7 @@ public class CloveHavenScreen extends BaseScreen {
 			for (BaseActor doorActor : BaseActor.getList(mainStage, Door.class.getName())) {
 				Door door = (Door)doorActor;
 				
-				if (player.interactsWith(door) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if (player.interactsWith(door) && door.isInteractable() && Gdx.input.isKeyJustPressed(Keys.E)) {
 					door.interact(player);
 					return; //Don't interact with anything else
 				}

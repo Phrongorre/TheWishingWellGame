@@ -33,7 +33,7 @@ public class Player extends Person {
 			GameMetaData.setInventory(new Inventory(uiStage));
 		}
 		else {
-			GameMetaData.setInventoryStage(uiStage);
+			//GameMetaData.setInventoryStage(uiStage);
 		}
 		this.inventory = GameMetaData.getInventory();
 		this.interacting = false;

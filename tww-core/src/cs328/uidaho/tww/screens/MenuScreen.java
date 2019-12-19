@@ -23,7 +23,7 @@ public class MenuScreen extends BaseScreen {
 				}
 				
 				GameMetaData.setSpawnLocation(350f, 55f);
-				BaseGame.setActiveScreen(new CloveHavenScreen());
+				BaseGame.setActiveScreen(GameMetaData.getScreen(CloveHavenScreen.class));
 				return false;
 			}
 		);
