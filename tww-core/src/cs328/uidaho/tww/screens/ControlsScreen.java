@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import cs328.uidaho.tww.BaseGame;
 import cs328.uidaho.tww.GameMetaData;
 import cs328.uidaho.tww.actors.BaseActor;
-import cs328.uidaho.tww.actors.collidables.Item;
 
 public class ControlsScreen extends BaseScreen {
 

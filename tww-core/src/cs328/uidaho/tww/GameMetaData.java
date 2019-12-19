@@ -13,7 +13,6 @@ public class GameMetaData {
 	private static float spawnY;
 	private static Inventory inventory;
 	private static Array<BaseScreen> gameScreens;
-	private static Array<Item> keyItems;
 	private static boolean wireframesVisible;
 	private static boolean debugMode = false;
 	
