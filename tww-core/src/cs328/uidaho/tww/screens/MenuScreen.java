@@ -7,11 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import cs328.uidaho.tww.BaseGame;
+import cs328.uidaho.tww.actors.BaseActor;
 
 public class MenuScreen extends BaseScreen {
 	
 	@Override
 	public void initialize() {
+		//Zoom in by 3x
+		this.mainStage.getCamera().viewportWidth  /= 3f;
+		this.mainStage.getCamera().viewportHeight /= 3f;
+		(new BaseActor(0f, 0f, "gui/menu_splash.png", this.mainStage)).centerAtPosition(400f, 300f);
 		
 		//Add Start Button
 		TextButton startButton = new TextButton("Start", BaseGame.textButtonStyle);
@@ -26,7 +31,6 @@ public class MenuScreen extends BaseScreen {
 				return false;
 			}
 		);
-		
 		
 		//Add Quit Button
 		TextButton quitButton = new TextButton("Quit", BaseGame.textButtonStyle);
@@ -43,6 +47,8 @@ public class MenuScreen extends BaseScreen {
 		);
 		
 		this.uiTable.pad(10f);
+		this.uiTable.add().colspan(2).expand(1, 1);
+		this.uiTable.row();
 		this.uiTable.add(startButton);
 		this.uiTable.add(quitButton);
 	}

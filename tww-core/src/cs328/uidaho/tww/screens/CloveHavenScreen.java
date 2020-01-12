@@ -111,33 +111,53 @@ public class CloveHavenScreen extends BaseScreen {
 			new Blurb("Oh, okay...", new Blurb("Please come back if you change your mind."))
 		);
 		
-		GatedPrompt sodaPrompt = (new GatedPrompt("Could you bring me a soda?", "cola")).addUnlockedResponse(
-			"Here you go!",
-			new Blurb("Thank you! Have a key!")
-		).addLockedResponse(
-			"Sure thing!",
-			(new Prompt("Great, thanks!")).addResponse(
-				"Do you know where I could find some?",
-				new Blurb("They're usually in vending machines.", new Blurb("Martin's Grocery is probably your best bet."))
-			).addResponse(
-				"Take care.",
-				new Blurb("Please hurry back, I'm so thirsty...")
+		disc.addPrompt((new GatedPrompt("Hello!", "cola")).addLockedResponse(
+			"Hello. What rumors have you heard about the wishing well?",
+			new Blurb("Oh that crumbling heap of stones just out of town?",
+				new Blurb("Yeah, I've heard young children go missing from there.",
+					new Blurb("Some folks say it's spirits that take them...",
+						(new Prompt("But personally it seems more like the Books Shop creep.")).addResponse(
+							"The \"Books Shop creep?\"",
+							(new Prompt("Yeah. I don't have proof, but he really wigs me out.")).addResponse(
+								"When will the Books Shop be open again?",
+								new Blurb("Oh that old shop is never open.",
+									new Blurb("He keeps it locked up all day long.",
+										new Blurb("But it just so happens I found a key that might unlock it.",
+											new Blurb("Tell you what, you get me a soda, and I will give it to you!",
+												(new Prompt("All of this talking has made me thirsty...")).addResponse(
+													"Sure thing!",
+													(new Prompt("Great, thanks!")).addResponse(
+														"Do you know where I could find some?",
+														new Blurb("They're usually in vending machines.",
+															new Blurb("Martin's Grocery is probably your best bet.")
+														)
+													).addResponse(
+														"Take care.",
+														new Blurb("Please hurry back, I'm so thirsty...")
+													)
+												).addResponse(busy)
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
 			)
-		).addLockedResponse(busy);
-		
-		sodaPrompt.setUnlockAction(Actions.run(
-			() -> {
+		).addUnlockedResponse(
+			"I have that soda you asked for.",
+			new Blurb("Oh great! Thank you!",
+				new Blurb("As promised, here's the key I found.",
+					new Blurb("Good luck.")
+				)
+			)
+		).setUnlockAction(Actions.run(
+			()->{
 				Item key = new Item("key", 0f, 0f, this.mainStage);
 				key.interact(player);
 			}
-		));
-		
-		disc.addPrompt(new Blurb("Hey, do you think you could help me?", 
-			(new Prompt("There's a reward in it for you...")).addResponse(
-				"Sure, what's up?",
-				new Blurb("I'm parched, but also broke.", sodaPrompt)
-			).addResponse(busy)
-		));
+		)));
 		
 		(new NPC(105f, 57f, this.mainStage)).setDiscussion(disc);
 		

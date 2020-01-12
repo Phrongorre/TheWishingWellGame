@@ -33,7 +33,7 @@ public abstract class BaseGame extends Game {
 		BaseGame.labelStyle = new LabelStyle();
 		FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("gui/fonts/the-wishing-well/the-wishing-well.ttf"));
 		FreeTypeFontParameter fontParameters = new FreeTypeFontParameter();
-		fontParameters.size = 24;
+		fontParameters.size = 20;
 		fontParameters.color = Color.BLACK;
 		fontParameters.minFilter = TextureFilter.Nearest;
 		fontParameters.magFilter = TextureFilter.Nearest;

@@ -28,7 +28,7 @@ public class DialogueBox extends BaseActor {
 		this.dialogueTable.add(this.dialogueLabel).align(Align.topLeft);
 		this.dialogueTable.pad(this.padding);
 		this.dialogueTable.align(Align.topLeft);
-		this.dialogueTable.setSize(this.getWidth(), this.getHeight());
+		this.dialogueTable.setSize(this.getWidth()*1.5f, this.getHeight());
 		
 		this.addActor(this.dialogueTable);
 	}

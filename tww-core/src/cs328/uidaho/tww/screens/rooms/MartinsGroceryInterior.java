@@ -25,7 +25,10 @@ public class MartinsGroceryInterior extends Room {
 			new Blurb("Uggggh...",
 				new Blurb("I'm so annoyed.",
 					new Blurb("I know I had a coin earlier by the tree...",
-						new Blurb("...all I want is a stupid soda!"))
+						new Blurb("...but, now it's like it vanished!",
+							new Blurb("All I want is a stupid soda!")
+						)
+					)
 				)
 			)
 		);

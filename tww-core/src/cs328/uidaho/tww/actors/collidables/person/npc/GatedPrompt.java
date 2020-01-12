@@ -89,8 +89,9 @@ public class GatedPrompt extends Prompt {
 		return str;
 	}
 	
-	public void setUnlockAction(Action a) {
+	public GatedPrompt setUnlockAction(Action a) {
 		this.unlockAction = a;
+		return this;
 	}
 	
 	public void unlockAction(Actor a) {

@@ -116,4 +116,12 @@ public class GameMetaData {
 		return GameMetaData.wireframesVisible;
 	}
 	
+	public static void reset() {
+		GameMetaData.initialize();
+	}
+	
+	public static void clearRegisteredScreens() {
+		GameMetaData.gameScreens.clear();
+	}
+	
 }

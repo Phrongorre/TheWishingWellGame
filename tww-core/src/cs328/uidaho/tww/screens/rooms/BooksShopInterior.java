@@ -25,18 +25,22 @@ public class BooksShopInterior extends Room {
 		this.exitDoor.setTargetScreen(CloveHavenScreen.class);
 		
 		(new NPC(50f, 30f, this.mainStage)).addPrompt(
-			new Blurb("So you finally found me.",
-				new Blurb("I hope it was worth the effort.",
-					new Blurb("After all...",
-						(new ActionPrompt("There's only so much to do in this town.")).setPromptAction(Actions.sequence(
-							Actions.delay(3f),
-							//Actions.fadeOut(2f),
-							Actions.run(
-								() -> {
-									BaseGame.setActiveScreen(new ExitScreen());
-								}
+			new Blurb("So you finally found me, Detective.",
+				new Blurb("I knew that last disappearance was sloppy.",
+					new Blurb("It was only a matter of time before someone would notice.",
+						new Blurb("Even still, I would say it was worth it.",
+							new Blurb("After all...",
+								(new ActionPrompt("There's only so much to do in this boring little town.")).setPromptAction(Actions.sequence(
+									Actions.delay(3f),
+									//Actions.fadeOut(2f),
+									Actions.run(
+										() -> {
+											BaseGame.setActiveScreen(new ExitScreen());
+										}
+									)
+								)).addResponse("Next", null)
 							)
-						)).addResponse("Next", null)
+						)
 					)
 				)
 			)
